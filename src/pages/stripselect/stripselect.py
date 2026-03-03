@@ -1,3 +1,5 @@
+# CONNECT THIS TO THE CAMERA PAGEEEEEEEE!!!!!!!!!!!!!!
+
 # from flask import Flask, render_template, request
 # import cv2
 # import os
