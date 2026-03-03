@@ -28,3 +28,24 @@ body {
   width: 950px;        
   padding-left: 10px;
 }
+
+.photo-button { 
+    position: absolute; 
+    transform: translate(-50%, -50%); 
+    padding: 8px 15px; 
+    font-size: 30px; 
+    font-family: 'Kapakana', sans-serif;
+    color: #632424;
+    border: none; 
+    border-radius: 8px; 
+    background-color:#FEE9E7; 
+    cursor: pointer; 
+    transition: 0.2s ease; 
+    box-shadow: -4px 4px 2px #9a6c6c;
+    top: 79%; 
+    left: 50%; 
+} 
+.photo-button:hover { 
+    background-color: #835C5C; 
+    color:#FEE9E7;
+}
