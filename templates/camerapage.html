@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Camera Page</title>
-  <link rel="stylesheet" href="./camerapage.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='camerapage.css') }}">
 </head>
 
 <body>
     <div class="photo-container"> 
-      <img src="../../assets/camera-page.png" class="foreground-photo" alt="camera page"> 
+      <img src="{{ url_for('static', filename='assets/camera-page.png') }}" class="foreground-photo" alt="camera page"> 
       <button id="start" class="photo-button">Start</button> 
     </div>
 </body>

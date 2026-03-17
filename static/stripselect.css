@@ -1,0 +1,73 @@
+@font-face { 
+    font-family: 'Kapakana'; 
+    src: url('../../assets/kapakana-font/Kapakana-VariableFont_wght.ttf') 
+    format('truetype');
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  background-image: url("../../assets/checkered-floor.png"); /* change to your file */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.photo-container { 
+    position: relative; 
+    display: inline-block; 
+} 
+.foreground-photo {
+  width: 950px;        /* adjust size here */
+  padding-left: 10px;
+}
+
+.photo-button { 
+    position: absolute; 
+    transform: translate(-50%, -50%); 
+    padding: 5px 10px; 
+    font-size: 22px; 
+    font-family: 'Kapakana', sans-serif;
+    color: #FEE9E7;
+    border: none; 
+    border-radius: 8px; 
+    background-color:#835C5C; 
+    cursor: pointer; 
+    transition: 0.2s ease; 
+    box-shadow: -4px 4px 2px #632424;
+} 
+.photo-button:hover { 
+    background-color: #633939; 
+    color:#FEE9E7;
+}
+#fourbyone {
+    top: 59%; 
+    left: 29.5%; 
+}
+
+#twobytwo {
+    top: 59%; 
+    left: 48.5%; 
+}
+
+#fourbytwo {
+    top: 59%; 
+    left: 69.5%;
+}
+
+#onebythree {
+    top: 82%; 
+    left: 34.5%; 
+}
+
+#onebyfour {
+    top: 82%; 
+    left: 64.5%; 
+}

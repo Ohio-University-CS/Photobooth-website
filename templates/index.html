@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <title>Main page</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 
 <body>
     <div class="photo-container"> 
-      <img src="./assets/photobooth.png" class="foreground-photo" alt="Photobooth Photo"> 
+      <img src="{{ url_for('static', filename='assets/photobooth.png') }}" class="foreground-photo" alt="Photobooth Photo"> 
       <button id="startBtn" class="photo-button">begin</button> 
     </div>
 
-    <img id="overlay" src="./assets/open-curtain.png" /> 
+    <img id="overlay" src="{{ url_for('static', filename='assets/open-curtain.png') }}" /> 
     <script> 
       const btn = document.getElementById("startBtn"); 
       const overlay = document.getElementById("overlay"); 
       btn.addEventListener("click", () => { overlay.style.opacity = "1"; 
-      setTimeout(() => { window.location.href = "./pages/stripselect/stripselect.html"; }, 850); }); 
+      setTimeout(() => { window.location.href = "{{ url_for('stripselect.stripselect') }}"; }, 850); }); 
     </script>
 </body>
 </html>
