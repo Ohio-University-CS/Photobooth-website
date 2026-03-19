@@ -4,12 +4,46 @@
   <meta charset="UTF-8">
   <title>Camera Page</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='camerapage.css') }}">
+  <style>
+    .photo-container {
+      position: relative;
+      display: inline-block;
+    }
+    #webcam {
+      position: absolute;
+      top: 18%;
+      left: 27%;
+      width: 46%;
+      height: 52%;
+      object-fit: cover;
+      transform: scaleX(-1);
+      z-index: 1;
+    }
+  </style>
 </head>
 
 <body>
     <div class="photo-container"> 
-      <img src="{{ url_for('static', filename='assets/camera-page.png') }}" class="foreground-photo" alt="camera page"> 
-      <button id="start" class="photo-button">Start</button> 
+        <video id="webcam" autoplay playsinline></video>
+        <img src="{{ url_for('static', filename='assets/camera-page.png') }}" class="foreground-photo" alt="camera page"> 
+        <button id="start" class="photo-button">Start</button> 
     </div>
+
+    <script>
+    async function startCamera() {
+        const videoElement = document.getElementById('webcam');
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ 
+                video: { facingMode: "user" } 
+            });
+            videoElement.srcObject = stream;
+            videoElement.style.transform = "scaleX(-1)"; 
+        } catch (error) {
+            console.error("DETAILED ERROR:", error.name, error.message);
+            alert("Error: " + error.name + ". Check the console (F12) for details.");
+        }
+    }
+    startCamera();
+    </script>
 </body>
 </html>
