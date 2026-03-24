@@ -30,3 +30,6 @@ instance/
 build/
 dist/
 *.egg-info/
+
+# -- Local photos
+static/photos/
