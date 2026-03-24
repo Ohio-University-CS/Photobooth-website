@@ -34,6 +34,7 @@ def store_choice():
 def camera():
     count = session.get("photo_count", 1)
     button = session.get("button_name", "unknown")
+    session["photos_taken"] = 0  # reset every time camera page loads
 
     return render_template("camerapage.html",
                            photo_count=count,
