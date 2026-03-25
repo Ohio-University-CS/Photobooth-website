@@ -28,3 +28,22 @@ body {
   width: 950px;        /* adjust size here */
   padding-left: 10px;
 }
+
+.photos-grid {
+  position: absolute;
+  top: 30%;
+  left: 18%;
+  width: 57%;
+  height: 62%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px;
+  overflow: hidden;
+}
+
+.photos-grid img {
+  width: calc(50% - 6px);
+  height: calc(50% - 6px);
+  object-fit: cover;
+}
