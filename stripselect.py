@@ -72,3 +72,9 @@ def take_photos():
 def next_page():
     return render_template("camerapage.html")
 
+@stripselect_bp.route("/photo-confirmation")
+def photo_confirmation():
+    photos = session.get("saved_photos", [])
+    return render_template("photo-confirmation.html", photos=photos)
+
+

@@ -1,6 +1,6 @@
 @font-face { 
     font-family: 'Kapakana'; 
-    src: url('../../assets/kapakana-font/Kapakana-VariableFont_wght.ttf') 
+    src: url('assets/kapakana-font/Kapakana-VariableFont_wght.ttf') 
     format('truetype');
 }
 
@@ -8,7 +8,7 @@ body {
   margin: 0;
   padding: 0;
 
-  background-image: url("../../assets/checkered-floor.png"); /* change to your file */
+  background-image: url("assets/checkered-floor.png"); /* change to your file */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

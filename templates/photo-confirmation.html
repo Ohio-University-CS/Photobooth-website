@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Photo Confirmation Page</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='photo-confirmation.css') }}">
+</head>
+
+<body>
+    <div class="photo-container">
+        <img src="{{ url_for('static', filename='assets/photo-confirmation.png') }}" class="foreground-photo">
+    </div>
+
+    {% for p in photos %}
+    <img src="{{ url_for('static', filename='photos/' + p.split('/')[-1]) }}">
+    {% endfor %}
+</body>
+</html>

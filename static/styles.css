@@ -21,13 +21,36 @@ body {
 }
 
 .photo-container { 
-    position: relative; 
-    display: inline-block; 
+    position: relative;
+    display: inline-block;
 } 
-.foreground-photo {
-  width: 800px;        /* adjust size here */
-  padding-left: 10px;
+
+.base-photo {
+  width: 800px;
+  display: block;
 }
+
+.curtain {
+  position: absolute;
+  top: 130px;
+  left: 50%;
+  transform: translateX(calc(-50% + 175px)); /* makes it the smame for all computers */
+  width: 380px;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+/* Closed curtain visible at start */
+.curtain.closed {
+  opacity: 1;
+}
+
+/* Open curtain hidden at start */
+.curtain.open {
+  opacity: 0;
+}
+
+
  /* Button on top of the image */ 
 .photo-button { 
     position: absolute; 
@@ -50,13 +73,3 @@ body {
     color:#FEE9E7;
 }
 
-#overlay {
-      position: fixed;
-      top: 34%;
-      right: 29%;
-      width: 350px;
-      /* object-fit: cover; */
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.4s ease;
-}

@@ -8,16 +8,36 @@
 
 <body>
     <div class="photo-container"> 
-      <img src="{{ url_for('static', filename='assets/photobooth.png') }}" class="foreground-photo" alt="Photobooth Photo"> 
+        <!-- BASE IMAGE (always visible) -->
+        <img src="{{ url_for('static', filename='assets/photo-booth.png') }}"
+            class="base-photo">
+
+        <!-- CLOSED CURTAIN (visible at start) -->
+        <img id="closedCurtain"
+            src="{{ url_for('static', filename='assets/closed-curtain.png') }}"
+            class="curtain closed">
+
+        <!-- OPEN CURTAIN (hidden at start) -->
+        <img id="openCurtain"
+            src="{{ url_for('static', filename='assets/open-curtain.png') }}"
+            class="curtain open">
+
       <button id="startBtn" class="photo-button">begin</button> 
     </div>
 
-    <img id="overlay" src="{{ url_for('static', filename='assets/open-curtain.png') }}" /> 
-    <script> 
-      const btn = document.getElementById("startBtn"); 
-      const overlay = document.getElementById("overlay"); 
-      btn.addEventListener("click", () => { overlay.style.opacity = "1"; 
-      setTimeout(() => { window.location.href = "{{ url_for('stripselect.stripselect') }}"; }, 850); }); 
+    <script>
+      const btn = document.getElementById("startBtn");
+      const closed = document.getElementById("closedCurtain");
+      const open = document.getElementById("openCurtain");
+
+      btn.addEventListener("click", () => {
+        closed.style.opacity = "0";   // fade out closed curtain
+        open.style.opacity = "1";     // fade in open curtain
+
+        setTimeout(() => {
+          window.location.href = "{{ url_for('stripselect.stripselect') }}";
+        }, 850);
+      });
     </script>
 </body>
 </html>
