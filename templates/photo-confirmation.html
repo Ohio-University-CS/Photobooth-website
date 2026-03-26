@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Photo Confirmation Page</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='photo-confirmation.css') }}">
+  <style>
+    .photos-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .photos-grid img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+    }
+  </style>
+</head>
+
+<body>
+    <div class="photo-container">
+        <img src="{{ url_for('static', filename='assets/photo-confirmation.png') }}" class="foreground-photo">
+    </div>
+
+  <div class="photos-grid">
+  {% for p in photos %}
+  <img src="{{ url_for('static', filename='photos/' + p.split('/')[-1]) }}">
+  {% endfor %}
+  </div>
+</body>
+</html>

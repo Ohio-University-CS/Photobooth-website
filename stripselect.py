@@ -1,5 +1,7 @@
 from flask import Flask, Blueprint, render_template, request, redirect, url_for, session
 import csv, os
+import base64 # for decoding the base64 image data sent from the client
+
 
 stripselect_bp = Blueprint('stripselect', __name__, template_folder='../templates')
 os.makedirs("static/photos", exist_ok=True) # makes sure the photos directory exists
@@ -32,17 +34,50 @@ def store_choice():
 def camera():
     count = session.get("photo_count", 1)
     button = session.get("button_name", "unknown")
+    session["photos_taken"] = 0  # reset every time camera page loads
 
     return render_template("camerapage.html",
                            photo_count=count,
                            last_button=button)
 
 @stripselect_bp.route("/take_photos", methods=["POST"])
+#function to save users photos, called by the camerapage.html script when the user takes a photo
 def take_photos():
+
+    #gets users photo, 
+    #need to send it here as a json object with the key "image"
+    data = request.json.get("image")
+    if not data:
+        return "Error, no photo recieved"
+    
+    #saves the pohto to the static/photos directory
+    #The filename has the users session id and the photo count to make it unique
+    image_data = base64.b64decode(data.split(",")[1])
+
+    photos_taken = session.get("photos_taken", 0) + 1
+    session["photos_taken"] = photos_taken
+    button = session.get("button_name", "unknown")
+
+    filename = f"static/photos/{button}_{photos_taken}.jpg"
+    with open(filename, "wb") as f:
+        f.write(image_data)
+
+    saved = session.get("saved_photos", [])
+    saved.append(filename)
+    session["saved_photos"] = saved
+    #tells camerapage.html how many photos have been taken and how many are left, so it can update the UI
+    #and also tells it if the user is done taking photos
     count = session.get("photo_count", 1)
-    return f"Taking {count} photos (button={session.get('button_name')})"
+    done = photos_taken >= count
+    return {"photos_taken": photos_taken, "total": count, "done": done}
 
 @stripselect_bp.route("/next", methods=["POST"])
 def next_page():
     return render_template("camerapage.html")
+
+@stripselect_bp.route("/photo-confirmation")
+def photo_confirmation():
+    photos = session.get("saved_photos", [])
+    return render_template("photo-confirmation.html", photos=photos)
+
 
