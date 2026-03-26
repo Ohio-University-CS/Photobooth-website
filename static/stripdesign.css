@@ -1,0 +1,31 @@
+@font-face { 
+    font-family: 'Kapakana'; 
+    src: url("/static/assets/kapakana-font/Kapakana-VariableFont_wght.ttf") format("truetype");
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  background-image: url("/static/assets/checkered-floor.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.photo-container { 
+    position: relative; 
+    display: inline-block; 
+    width: 950px;
+} 
+
+.foreground-photo {
+  width: 950px;
+}
+

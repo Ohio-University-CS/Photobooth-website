@@ -20,17 +20,32 @@
   </style>
 </head>
 <body>
-  <div class="photo-container">
-    <img src="{{ url_for('static', filename='photos/' + photo.split('/')[-1]) }}" style="width:300px;height:300px;">
+  <div class = "photo-wrapper">
+      <div class="photo-container"> 
+        <img src="{{ url_for('static', filename='assets/photo-confirmation.png') }}" 
+            class="background-frame">
+
+        <img src="{{ url_for('static', filename='photos/' + photo.split('/')[-1]) }}" 
+            class="captured-photo">
+
+        <p class="photo-label">Photo {{ photo_id + 1 }} of {{ photos|length }} </p>
+
+        {% if photo_id > 0 %}
+          <a class="nav-btn prev" href="{{ url_for('stripselect.photo_confirmation', photo_id=photo_id-1) }}">
+            ◀
+          </a>
+        {% endif %}
+
+        {% if photo_id < photos|length - 1 %}
+          <a class="nav-btn next" href="{{ url_for('stripselect.photo_confirmation', photo_id=photo_id+1) }}">
+            ▶
+          </a>
+        {% endif %}
+
+        <a class="photo-button retake" href="{{ url_for('stripselect.camera') }}"> Retake </a>
+        <a class="photo-button next" href="{{ url_for('stripselect.stripdesign') }}"> Next </a>
+    </div>
   </div>
-  <div>
-    {% if photo_id > 0 %}
-      <a href="{{ url_for('stripselect.photo_confirmation', photo_id=photo_id-1) }}">Previous</a>
-    {% endif %}
-    {% if photo_id < photos|length - 1 %}
-      <a href="{{ url_for('stripselect.photo_confirmation', photo_id=photo_id+1) }}">Next</a>
-    {% endif %}
-    <p>Photo {{ photo_id + 1 }}</p>
-  </div>
+ 
 </body>
 </html>

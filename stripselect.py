@@ -84,4 +84,7 @@ def photo_confirmation(photo_id):
     photo = photos[photo_id] 
     return render_template("photo-confirmation.html", photo_id=photo_id, photos=photos, photo=photo)
 
+@stripselect_bp.route("/stripdesign")
+def stripdesign():
+    return render_template("stripdesign.html")
 
