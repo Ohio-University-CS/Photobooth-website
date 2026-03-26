@@ -12,12 +12,17 @@
     }
 
     #countdown {
-    position: absolute;
-    bottom: 10%;
-    left: 27%;
-    font-size: 3rem;
-    color: rgb(3, 245, 229);
-    z-index: 2;
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  transform: translate(-50%, -50%);  /* this is what centers it */
+  font-size: 8rem;
+  font-family: 'Times New Roman', cursive;
+  color: white;
+  -webkit-text-stroke: 3px rgb(255, 255, 255);
+  text-shadow: 0 0 20px rgb(252, 255, 255), 0 4px 0 rgba(0,0,0,0.3);
+  z-index: 4;
+  pointer-events: none;
 }
     #webcam {
       position: absolute;
@@ -112,7 +117,8 @@ for (let i = 0; i < count; i++) {
 
     const result = await response.json();
     if (result.done) {
-        window.location.href = "/"; //redirect to next page
+        await new Promise(resolve => setTimeout(resolve, 1000)); // 1.0 second pause
+        window.location.href = "/stripselect/photo-confirmation/0"; //redirect to next page
     }
 }
 });
