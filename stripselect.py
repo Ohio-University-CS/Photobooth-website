@@ -61,7 +61,7 @@ def take_photos():
     with open(filename, "wb") as f:
         f.write(image_data)
 
-    #tells camerapage.html how many photos have been taken and how many are left, so it can update the UI
+    #tells camerapage.html how many photos have been taken and how many are left
     #and also tells it if the user is done taking photos
     count = session.get("photo_count", 1)
     done = photos_taken >= count
