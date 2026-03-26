@@ -118,7 +118,7 @@ for (let i = 0; i < count; i++) {
     const result = await response.json();
     if (result.done) {
         await new Promise(resolve => setTimeout(resolve, 1000)); // 1.0 second pause
-        window.location.href = "/stripselect/photo-confirmation"; //redirect to next page
+        window.location.href = "/stripselect/photo-confirmation/0"; //redirect to next page
     }
 }
 });

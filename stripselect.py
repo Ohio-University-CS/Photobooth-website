@@ -69,15 +69,19 @@ def take_photos():
     #and also tells it if the user is done taking photos
     count = session.get("photo_count", 1)
     done = photos_taken >= count
-    return {"photos_taken": photos_taken, "total": count, "done": done}
+    return {"done": done, "photos_taken": photos_taken, "photo_count": count}
 
 @stripselect_bp.route("/next", methods=["POST"])
 def next_page():
     return render_template("camerapage.html")
 
-@stripselect_bp.route("/photo-confirmation")
-def photo_confirmation():
+@stripselect_bp.route("/photo-confirmation/<int:photo_id>")
+def photo_confirmation(photo_id):
     photos = session.get("saved_photos", [])
-    return render_template("photo-confirmation.html", photos=photos)
+    if not photos:
+        return redirect(url_for("stripselect.stripselect"))  # Redirect to the stripselect page if no photos
+    photo_id = max(0, min(photo_id, len(photos) - 1))  # Ensure photo_id is within bounds
+    photo = photos[photo_id] 
+    return render_template("photo-confirmation.html", photo_id=photo_id, photos=photos, photo=photo)
 
 
