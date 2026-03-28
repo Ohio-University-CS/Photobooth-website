@@ -102,3 +102,11 @@ def stripdesignv():
 @stripselect_bp.route("/stripdesign/h")
 def stripdesignh():
     return render_template("stripdesign(h).html")
+
+@stripselect_bp.route("/stickerpage/v")
+def stickerpagev():
+    return render_template("stickerpage(v).html")
+
+@stripselect_bp.route("/stickerpage/h")
+def stickerpageh():
+    return render_template("stickerpage(h).html")
