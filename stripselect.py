@@ -79,12 +79,26 @@ def next_page():
 def photo_confirmation(photo_id):
     photos = session.get("saved_photos", [])
     if not photos:
-        return redirect(url_for("stripselect.stripselect"))  # Redirect to the stripselect page if no photos
-    photo_id = max(0, min(photo_id, len(photos) - 1))  # Ensure photo_id is within bounds
-    photo = photos[photo_id] 
-    return render_template("photo-confirmation.html", photo_id=photo_id, photos=photos, photo=photo)
+        return redirect(url_for("stripselect.stripselect"))
 
-@stripselect_bp.route("/stripdesign")
-def stripdesign():
-    return render_template("stripdesign.html")
+    photo_id = max(0, min(photo_id, len(photos) - 1))
+    photo = photos[photo_id]
 
+    button = session.get("button_name", "")
+
+    # Decide horizontal or vertical design pages
+    if button in ("onebythree", "onebyfour"):
+        next_url = url_for("stripselect.stripdesignh")
+    else:
+        next_url = url_for("stripselect.stripdesignv")
+
+    return render_template("photo-confirmation.html", photo_id=photo_id,photos=photos,photo=photo,next_url=next_url)
+
+
+@stripselect_bp.route("/stripdesign/v")
+def stripdesignv():
+    return render_template("stripdesign(v).html")
+
+@stripselect_bp.route("/stripdesign/h")
+def stripdesignh():
+    return render_template("stripdesign(h).html")
