@@ -110,3 +110,8 @@ def stickerpagev():
 @stripselect_bp.route("/stickerpage/h")
 def stickerpageh():
     return render_template("stickerpage(h).html")
+
+@stripselect_bp.route("/stripcollect")
+def stripcollect():
+    return render_template("stripcollect.html")
+
