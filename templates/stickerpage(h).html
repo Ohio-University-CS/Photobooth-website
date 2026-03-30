@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Strip-Design Page</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='stickerpage(h).css') }}">
+</head>
+
+<body>
+    <div class="photo-container"> 
+      <img src="{{ url_for('static', filename='assets/sticker-page(h).png') }}" class="foreground-photo" alt="Strip design photo"> 
+    </div>
+
+    <div>
+        <a class="photo-button" href="{{ url_for('stripselect.stripcollect') }}" > Continue </a>
+    </div>
+</body>

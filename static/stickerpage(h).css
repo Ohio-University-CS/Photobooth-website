@@ -29,3 +29,19 @@ body {
   width: 950px;
 }
 
+.photo-button { 
+    position: absolute; 
+    top: 700px;
+    right: 360px;
+    transform: translate(-50%, -50%); 
+    padding: 5px 10px; 
+    font-size: 25px; 
+    font-family: 'Kapakana', sans-serif;
+    color: #632424;
+    border: none; 
+    border-radius: 8px; 
+    background-color:#FEE9E7; 
+    cursor: pointer; 
+    transition: 0.2s ease; 
+    box-shadow: -4px 4px 2px #835c5c;
+} 
