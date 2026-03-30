@@ -7,26 +7,41 @@
 body {
   margin: 0;
   padding: 0;
-
-  background-image: url("assets/checkered-floor.png"); /* change to your file */
+  background-image: url("assets/checkered-floor.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  text-align: center;
+}
 
+.photo-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100vh;   /* this centers vertically */
 }
 
-.photo-container { 
-    position: relative; 
-    display: inline-block; 
-} 
-.foreground-photo {
-  width: 950px;        /* adjust size here */
-  padding-left: 10px;
+.photo-container {
+  position: relative;
+  width: 950px; /* match your frame width */
+  margin: 0 auto;
+}
+
+.background-frame {
+  width: 100%;
+  display: block;
+}
+
+.captured-photo {
+  position: absolute;
+  top: 225px;        /* adjust vertically */
+  left: 50%;         /* center horizontally */
+  transform: translateX(-50%);
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  z-index: 10;
 }
 
 .photos-grid {
@@ -47,3 +62,64 @@ body {
   height: calc(50% - 6px);
   object-fit: cover;
 }
+
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 10px 18px;
+  color: #2D0404;
+  text-decoration: none;
+  font-size: 40px;
+  border-radius: 6px;
+  z-index: 20;
+}
+
+/* Left button */
+.nav-btn.prev {
+  top: 375px;
+  left: 200px; /* adjust to sit right beside the photo */
+}
+
+/* Right button */
+.nav-btn.next {
+  top: 375px;
+  right: 225px; /* adjust to sit right beside the photo */
+}
+
+.photo-label {
+  position: absolute;
+  top: 505px; 
+  left: 50%;
+  transform: translateX(-50%);
+  color: #2D0404;
+  font-size: 30px;
+  font-family: 'Kapakana', sans-serif;
+  z-index: 20;
+}
+
+.photo-button { 
+    position: absolute; 
+    transform: translate(-50%, -50%); 
+    padding: 5px 10px; 
+    font-size: 25px; 
+    font-family: 'Kapakana', sans-serif;
+    color: #FEE9E7;
+    border: none; 
+    border-radius: 8px; 
+    background-color:#835C5C; 
+    cursor: pointer; 
+    transition: 0.2s ease; 
+    box-shadow: -4px 4px 2px #632424;
+} 
+
+.photo-button.retake {
+  top: 540px;
+  left: 250px;
+}
+
+.photo-button.next {
+  top: 540px;
+  right: 190px;
+}
+

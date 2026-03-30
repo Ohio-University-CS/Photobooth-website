@@ -1,0 +1,142 @@
+@font-face { 
+    font-family: 'Kapakana'; 
+    src: url("/static/assets/kapakana-font/Kapakana-VariableFont_wght.ttf") format("truetype");
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  background-image: url("/static/assets/checkered-floor.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.photo-container { 
+    position: relative; 
+    display: inline-block; 
+    width: 950px;
+} 
+
+.foreground-photo {
+  width: 950px;
+}
+
+.frame-circle-button-wrapper {
+    position: absolute;
+    top: 68.5%;
+    left: 42.5%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 250px;
+    justify-content: center;
+}
+
+.filter-circle-button-wrapper {
+    position: absolute;
+    top: 68.5%;
+    right: 32.75%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 120px;
+    justify-content: center;
+}
+
+.circle-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    box-shadow: 0 4px 4px rgba(0,0,0,0.2);
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.circle-btn:hover {
+    transform: scale(1.1);
+    background-color: #f0f0f0;
+}
+
+.circle-btn.white {
+  background-color: #FFFEEF;
+}
+.circle-btn.black {
+  background-color: #000000;
+}
+.circle-btn.pink {
+  background-color: #FDC8C8;
+}
+.circle-btn.blue {
+  background-color: #CBE3EB;
+}
+.circle-btn.green {
+  background-color: #ACC0AC;
+}
+.circle-btn.white-polka {
+  background-image: url("/static/assets/frame-buttons/white-polka.jpeg");
+  background-size: cover;
+  background-position: center;
+}
+.circle-btn.black-polka {
+  background-image: url("/static/assets/frame-buttons/black-polka.png");
+  background-size: cover;
+  background-position: center;
+}
+.circle-btn.red-polka {
+  background-image: url("/static/assets/frame-buttons/red-polka.jpeg");
+  background-size: cover;
+  background-position: center;
+}
+.circle-btn.none {
+  background-image: url("/static/assets/filter-buttons/filter-none.png");
+  background-size: cover;
+  background-position: center;
+}
+.circle-btn.bnw {
+  background-image: url("/static/assets/filter-buttons/filter-b:w.png");
+  background-size: cover;
+  background-position: center;
+}
+.circle-btn.bright {
+  background-image: url("/static/assets/filter-buttons/filter-bright.png");
+  background-size: cover;
+  background-position: center;
+}
+.circle-btn.vintage {
+  background-image: url("/static/assets/filter-buttons/filter-vintage.png");
+  background-size: cover;
+  background-position: center;
+}
+.photo-button { 
+    position: absolute; 
+    top: 700px;
+    right: 360px;
+    transform: translate(-50%, -50%); 
+    padding: 5px 10px; 
+    font-size: 25px; 
+    font-family: 'Kapakana', sans-serif;
+    color: #632424;
+    border: none; 
+    border-radius: 8px; 
+    background-color:#FEE9E7; 
+    cursor: pointer; 
+    transition: 0.2s ease; 
+    box-shadow: -4px 4px 2px #835c5c;
+} 
+
+
+

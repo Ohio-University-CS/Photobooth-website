@@ -35,7 +35,7 @@ def camera():
     count = session.get("photo_count", 1)
     button = session.get("button_name", "unknown")
     session["photos_taken"] = 0  # reset every time camera page loads
-
+    session["saved_photos"] = []  # clear saved photos on retake
     return render_template("camerapage.html",
                            photo_count=count,
                            last_button=button)
@@ -81,7 +81,39 @@ def next_page():
 def photo_confirmation(photo_id):
     photos = session.get("saved_photos", [])
     if not photos:
-        return redirect(url_for("stripselect.stripselect"))  # Redirect to the stripselect page if no photos
-    photo_id = max(0, min(photo_id, len(photos) - 1))  # Ensure photo_id is within bounds
+        return redirect(url_for("stripselect.stripselect"))
+
+    photo_id = max(0, min(photo_id, len(photos) - 1))
     photo = photos[photo_id]
-    return render_template("photo-confirmation.html", photo_id=photo_id, photos=photos, photo=photo)
+
+    button = session.get("button_name", "")
+
+    # Decide horizontal or vertical design pages
+    if button in ("onebythree", "onebyfour"):
+        next_url = url_for("stripselect.stripdesignh")
+    else:
+        next_url = url_for("stripselect.stripdesignv")
+
+    return render_template("photo-confirmation.html", photo_id=photo_id,photos=photos,photo=photo,next_url=next_url)
+
+
+@stripselect_bp.route("/stripdesign/v")
+def stripdesignv():
+    return render_template("stripdesign(v).html")
+
+@stripselect_bp.route("/stripdesign/h")
+def stripdesignh():
+    return render_template("stripdesign(h).html")
+
+@stripselect_bp.route("/stickerpage/v")
+def stickerpagev():
+    return render_template("stickerpage(v).html")
+
+@stripselect_bp.route("/stickerpage/h")
+def stickerpageh():
+    return render_template("stickerpage(h).html")
+
+@stripselect_bp.route("/stripcollect")
+def stripcollect():
+    return render_template("stripcollect.html")
+

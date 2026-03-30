@@ -31,29 +31,17 @@ body {
 
 .photo-button { 
     position: absolute; 
+    top: 700px;
+    right: 360px;
     transform: translate(-50%, -50%); 
     padding: 5px 10px; 
-    font-size: 35px; 
+    font-size: 25px; 
     font-family: 'Kapakana', sans-serif;
-    color: #FEE9E7;
+    color: #632424;
     border: none; 
     border-radius: 8px; 
-    background-color:#835C5C; 
+    background-color:#FEE9E7; 
     cursor: pointer; 
     transition: 0.2s ease; 
-    box-shadow: -4px 4px 2px #FEE9E7;
+    box-shadow: -4px 4px 2px #835c5c;
 } 
-.photo-button:hover { 
-    background-color: #633939; 
-    color:#FEE9E7;
-}
-
-.photo-button.download{
-   top: 72%;
-   left: 43%;
-}
-
-.photo-button.restart{
-   top: 72%;
-   right: 38%;
-}
