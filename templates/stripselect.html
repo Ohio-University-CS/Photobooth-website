@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Strip-Select Page</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='stripselect.css') }}">
+</head>
+
+<body>
+    <div class="photo-container"> 
+      <img src="{{ url_for('static', filename='assets/strip-select.png') }}" class="foreground-photo" alt="Strip select photo"> 
+      <form method="POST" action="/stripselect">
+        <button id="fourbyone" name="fourbyone" value="4" class="photo-button">4x1</button> 
+        <button id="twobytwo" name="twobytwo" value="4" class="photo-button">2x2</button> 
+        <button id="fourbytwo" name="fourbytwo" value="8" class="photo-button">4x2</button> 
+        <button id="onebythree" name="onebythree" value="3" class="photo-button">1x3</button> 
+        <button id="onebyfour" name="onebyfour" value="4" class="photo-button">1x4</button>
+      </form>
+    </div>
+</body>
+</html>

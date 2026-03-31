@@ -1,0 +1,35 @@
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+
+# --- Virtual environments ---
+venv/
+env/
+.venv/
+
+# --- IDE / Editor files ---
+.vscode/
+.idea/
+
+# --- OS files ---
+.DS_Store
+Thumbs.db
+
+# --- Flask / local files ---
+instance/
+*.sqlite3
+*.db
+
+# --- Logs ---
+*.log
+
+# --- Build / packaging ---
+build/
+dist/
+*.egg-info/
+.DS_Store
+
+photos/

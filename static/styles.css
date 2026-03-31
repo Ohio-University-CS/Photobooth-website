@@ -1,0 +1,75 @@
+@font-face { 
+    font-family: 'Kapakana'; 
+    src: url('/static/assets/kapakana-font/Kapakana-VariableFont_wght.ttf') 
+    format('truetype');
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  background-image: url("/static/assets/checkered-floor.png"); /* change to your file */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.photo-container { 
+    position: relative;
+    display: inline-block;
+} 
+
+.base-photo {
+  width: 800px;
+  display: block;
+}
+
+.curtain {
+  position: absolute;
+  top: 130px;
+  left: 50%;
+  transform: translateX(calc(-50% + 175px)); /* makes it the smame for all computers */
+  width: 380px;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+/* Closed curtain visible at start */
+.curtain.closed {
+  opacity: 1;
+}
+
+/* Open curtain hidden at start */
+.curtain.open {
+  opacity: 0;
+}
+
+
+ /* Button on top of the image */ 
+.photo-button { 
+    position: absolute; 
+    top: 60%; 
+    left: 25%; 
+    transform: translate(-50%, -50%); 
+    padding: 10px 60px; 
+    font-size: 25px; 
+    font-family: 'Kapakana', sans-serif;
+    color: #936A6A;
+    border: none; 
+    border-radius: 8px; 
+    background-color:#FEE9E7; 
+    cursor: pointer; 
+    transition: 0.2s ease; 
+} 
+
+.photo-button:hover { 
+    background-color: rgb(176, 136, 136); 
+    color:#FEE9E7;
+}
+
