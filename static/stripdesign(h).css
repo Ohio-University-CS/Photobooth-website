@@ -24,6 +24,14 @@ body {
     display: inline-block; 
     width: 950px;
 } 
+/** change this to adjust the position of the frame */
+.frame-image {
+  position: absolute;
+  top: 170px;
+  left: 230px;
+  width: 500px;
+  height: auto;
+}
 
 .foreground-photo {
   width: 950px;

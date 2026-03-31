@@ -201,12 +201,10 @@
 
         // ui handlers
         function selectFrame(color) {
-            currentFrameColor = color;
-            // Map color name, actual frame file for the current layout
-            // e.g. "fourbyone" + "pink" → "4x1-pink.png"
-            currentFrameSrc = `/static/assets/frames/${currentFrameKey}-${color}.png`;
-            renderStrip();
-        }
+    currentFrameColor = color;
+    currentFrameSrc = FRAME_MAP[currentFrameKey]; // just use base frame for now
+    renderStrip();
+}
 
         function selectFilter(filter) {
             currentFilter = filter;
