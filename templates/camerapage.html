@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Camera Page</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='camerapage.css') }}">
+  <!--Frame for the camera feed, and style for countdown-->
+  <style>
+    .photo-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    #countdown {
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  transform: translate(-50%, -50%);  /* this is what centers it */
+  font-size: 8rem;
+  font-family: 'Times New Roman', cursive;
+  color: white;
+  -webkit-text-stroke: 3px rgb(255, 255, 255);
+  text-shadow: 0 0 20px rgb(252, 255, 255), 0 4px 0 rgba(0,0,0,0.3);
+  z-index: 4;
+  pointer-events: none;
+}
+    #webcam {
+      position: absolute;
+      top: 18%; 
+      left: 27%;
+      width: 46%;
+      height: 52%;
+      object-fit: cover;
+      transform: scaleX(-1);
+      z-index: 1;
+    }
+    #flash {
+    position: absolute;
+    top: 18%;
+    left: 27%;
+    width: 46%;
+    height: 52%;
+    background: white;
+    opacity: 0;
+    z-index: 3;
+    transition: opacity 0.1s;
+}
+  </style>
+</head>
+
+<!--Actual camera page content-->
+<body>
+    <div class="photo-container"> 
+        <video id="webcam" autoplay playsinline></video>
+        <img src="{{ url_for('static', filename='assets/camera-page.png') }}" class="foreground-photo" alt="camera page"> 
+        <button id="start" class="photo-button" data-count="{{ photo_count }}">Start</button> 
+        <div id="countdown"></div>
+        <div id="flash"></div>
+        <canvas id="canvas" style="display:none;"></canvas>
+        
+    </div>
+
+    <!-- Script for opening the camera on users device-->
+    <script>
+    async function startCamera() {
+        const videoElement = document.getElementById('webcam');
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ 
+                video: { facingMode: "user" } 
+            });
+            videoElement.srcObject = stream;
+            videoElement.style.transform = "scaleX(-1)"; 
+        } catch (error) {
+            console.error("DETAILED ERROR:", error.name, error.message);
+            alert("Error: " + error.name + ". Check the console (F12) for details.");
+        }
+    }
+    startCamera();
+    document.getElementById("start").addEventListener("click", async function() {
+    const video = document.getElementById("webcam");
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const count = parseInt(document.getElementById("start").dataset.count);
+
+
+for (let i = 0; i < count; i++) {
+    // countdown for each photo
+    await new Promise(resolve => {
+        let seconds = 4;
+        const countdownEl = document.getElementById("countdown");
+        const timer = setInterval(() => {
+            countdownEl.textContent = seconds;
+            seconds--;
+            if (seconds < 0) {
+                clearInterval(timer);
+                countdownEl.textContent = "";
+                resolve();
+            }
+        }, 1000);
+    });
+
+    // capture
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    ctx.drawImage(video, 0, 0);
+    const flash = document.getElementById("flash");
+    flash.style.opacity = "1";
+    setTimeout(() => flash.style.opacity = "0", 100);
+    const imageData = canvas.toDataURL("image/jpeg");
+
+    // send to backend
+    const response = await fetch("/stripselect/take_photos", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ image: imageData })
+    });
+
+    const result = await response.json();
+    if (result.done) {
+        await new Promise(resolve => setTimeout(resolve, 1000)); // 1.0 second pause
+        window.location.href = "/stripselect/photo-confirmation/0"; //redirect to next page
+    }
+}
+});
+    </script>
+  </body>
+</html>

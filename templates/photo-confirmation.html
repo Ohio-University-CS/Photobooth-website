@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Photo Confirmation Page</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='photo-confirmation.css') }}">
+  <style>
+    .photos-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .photos-grid img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+  <div class = "photo-wrapper">
+      <div class="photo-container"> 
+        <img src="{{ url_for('static', filename='assets/photo-confirmation.png') }}" 
+            class="background-frame">
+
+        <img src="{{ url_for('static', filename='photos/' + photo.split('/')[-1]) }}" 
+            class="captured-photo">
+
+        <p class="photo-label">Photo {{ photo_id + 1 }} of {{ photos|length }} </p>
+
+        {% if photo_id > 0 %}
+          <a class="nav-btn prev" href="{{ url_for('stripselect.photo_confirmation', photo_id=photo_id-1) }}">
+            ◀
+          </a>
+        {% endif %}
+
+        {% if photo_id < photos|length - 1 %}
+          <a class="nav-btn next" href="{{ url_for('stripselect.photo_confirmation', photo_id=photo_id+1) }}">
+            ▶
+          </a>
+        {% endif %}
+
+        <a class="photo-button retake" href="{{ url_for('stripselect.camera') }}"> Retake </a>
+        <a class="photo-button next" href="{{ next_url }}"> Next </a>
+    </div>
+  </div>
+ 
+</body>
+</html>

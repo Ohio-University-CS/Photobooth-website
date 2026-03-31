@@ -1,0 +1,37 @@
+<<<<<<< HEAD
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+
+# --- Virtual environments ---
+venv/
+env/
+.venv/
+
+# --- IDE / Editor files ---
+.vscode/
+.idea/
+
+# --- OS files ---
+.DS_Store
+Thumbs.db
+
+# --- Flask / local files ---
+instance/
+*.sqlite3
+*.db
+
+# --- Logs ---
+*.log
+
+# --- Build / packaging ---
+build/
+dist/
+*.egg-info/
+=======
+.venv
+>>>>>>> 39d9b12966befccdb68da8de45857afccb71df95
+.DS_Store

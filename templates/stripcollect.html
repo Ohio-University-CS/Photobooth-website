@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Strip-Design Page</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='stripcollect.css') }}">
+</head>
+
+<body>
+    <div class="photo-container"> 
+      <img src="{{ url_for('static', filename='assets/strip-collect.png') }}" class="foreground-photo" alt="Strip collect photo"> 
+    </div>
+
+    <div>
+        <button class="photo-button download">Download</button> 
+        <a class="photo-button restart" href="{{ url_for('index') }}">Restart</a> 
+    </div>
+
+</body>
