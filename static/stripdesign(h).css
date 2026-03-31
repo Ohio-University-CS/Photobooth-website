@@ -6,35 +6,38 @@
 body {
   margin: 0;
   padding: 0;
-
   background-image: url("/static/assets/checkered-floor.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
-
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
 
+/* FIXED-SIZE ANCHOR — MUST MATCH PNG SIZE */
 .photo-container { 
     position: relative; 
-    display: inline-block; 
     width: 950px;
+    height: 750px;   /* <-- replace with actual height of strip-design(h).png */
+    overflow: hidden;
 } 
 
 .foreground-photo {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 950px;
+  height: 750px;   /* same as container */
 }
 
+/* FRAME COLOR BUTTONS — pixel-perfect inside image */
 .frame-circle-button-wrapper {
     position: absolute;
-    top: 68.5%;
-    left: 42.5%;
+    top: 555px;     /* adjust to match your horizontal layout */
+    left: 350px;
     transform: translate(-50%, -50%);
-
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
@@ -42,12 +45,12 @@ body {
     justify-content: center;
 }
 
+/* FILTER BUTTONS */
 .filter-circle-button-wrapper {
     position: absolute;
-    top: 68.5%;
-    right: 32.75%;
+    top: 555px;
+    left: 650px;
     transform: translate(-50%, -50%);
-
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
@@ -55,15 +58,17 @@ body {
     justify-content: center;
 }
 
+/* BUTTON BASE */
 .circle-btn {
     width: 42px;
     height: 42px;
     border-radius: 50%;
     border: none;
     box-shadow: 0 4px 4px rgba(0,0,0,0.2);
-    font-size: 20px;
     cursor: pointer;
     transition: 0.2s ease;
+    background-size: cover;
+    background-position: center;
 }
 
 .circle-btn:hover {
@@ -71,60 +76,27 @@ body {
     background-color: #f0f0f0;
 }
 
-.circle-btn.white {
-  background-color: #FFFEEF;
-}
-.circle-btn.black {
-  background-color: #000000;
-}
-.circle-btn.pink {
-  background-color: #FDC8C8;
-}
-.circle-btn.blue {
-  background-color: #CBE3EB;
-}
-.circle-btn.green {
-  background-color: #ACC0AC;
-}
-.circle-btn.white-polka {
-  background-image: url("/static/assets/frame-buttons/white-polka.jpeg");
-  background-size: cover;
-  background-position: center;
-}
-.circle-btn.black-polka {
-  background-image: url("/static/assets/frame-buttons/black-polka.png");
-  background-size: cover;
-  background-position: center;
-}
-.circle-btn.red-polka {
-  background-image: url("/static/assets/frame-buttons/red-polka.jpeg");
-  background-size: cover;
-  background-position: center;
-}
-.circle-btn.none {
-  background-image: url("/static/assets/filter-buttons/filter-none.png");
-  background-size: cover;
-  background-position: center;
-}
-.circle-btn.bnw {
-  background-image: url("/static/assets/filter-buttons/filter-b:w.png");
-  background-size: cover;
-  background-position: center;
-}
-.circle-btn.bright {
-  background-image: url("/static/assets/filter-buttons/filter-bright.png");
-  background-size: cover;
-  background-position: center;
-}
-.circle-btn.vintage {
-  background-image: url("/static/assets/filter-buttons/filter-vintage.png");
-  background-size: cover;
-  background-position: center;
-}
+/* COLORS / IMAGES */
+.circle-btn.white { background-color: #FFFEEF; }
+.circle-btn.black { background-color: #000000; }
+.circle-btn.pink { background-color: #FDC8C8; }
+.circle-btn.blue { background-color: #CBE3EB; }
+.circle-btn.green { background-color: #ACC0AC; }
+
+.circle-btn.white-polka { background-image: url("/static/assets/frame-buttons/white-polka.jpeg"); }
+.circle-btn.black-polka { background-image: url("/static/assets/frame-buttons/black-polka.png"); }
+.circle-btn.red-polka { background-image: url("/static/assets/frame-buttons/red-polka.jpeg"); }
+
+.circle-btn.none { background-image: url("/static/assets/filter-buttons/filter-none.png"); }
+.circle-btn.bnw { background-image: url("/static/assets/filter-buttons/filter-bnw.png"); }
+.circle-btn.bright { background-image: url("/static/assets/filter-buttons/filter-bright.png"); }
+.circle-btn.vintage { background-image: url("/static/assets/filter-buttons/filter-vintage.png"); }
+
+/* CONTINUE BUTTON */
 .photo-button { 
     position: absolute; 
-    top: 700px;
-    right: 360px;
+    top: 650px;
+    left: 875px;
     transform: translate(-50%, -50%); 
     padding: 5px 10px; 
     font-size: 25px; 
@@ -136,7 +108,4 @@ body {
     cursor: pointer; 
     transition: 0.2s ease; 
     box-shadow: -4px 4px 2px #835c5c;
-} 
-
-
-
+}
