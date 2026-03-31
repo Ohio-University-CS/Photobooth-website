@@ -73,6 +73,13 @@ body {
     cursor: pointer;
     transition: 0.2s ease;
 }
+.frame-image {
+  position: absolute;
+  top: 60px;
+  left: 60px;
+  width: 1050px;
+  height: auto;
+}
 
 .circle-btn:hover {
     transform: scale(1.1);
@@ -145,6 +152,7 @@ body {
     transition: 0.2s ease; 
     box-shadow: -4px 4px 2px #835c5c;
 } 
+
 
 
 
