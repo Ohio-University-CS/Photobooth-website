@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # --- Python ---
 __pycache__/
 *.pyc
@@ -31,7 +30,6 @@ instance/
 build/
 dist/
 *.egg-info/
-=======
-.venv
->>>>>>> 39d9b12966befccdb68da8de45857afccb71df95
 .DS_Store
+
+photos/

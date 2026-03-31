@@ -29,6 +29,15 @@ body {
   width: 950px;
 }
 
+.frame-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 80%;
+  max-height: 80%;
+}
+
 .frame-circle-button-wrapper {
     position: absolute;
     top: 45%;
