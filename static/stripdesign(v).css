@@ -16,11 +16,11 @@ body {
   height: 100vh;
 }
 
-/* Fixed-size anchor: MUST match your foreground image size */
+
 .photo-container { 
   position: relative; 
   width: 950px;
-  height: 750px;   /* set this to your actual image height */
+  height: 750px;
   overflow: hidden;
 }
 
@@ -29,10 +29,10 @@ body {
   top: 0;
   left: 0;
   width: 950px;
-  height: 750px;   /* same as container */
+  height: 750px;
 }
 
-/* Canvas aligned in exact px inside the image */
+
 .frame-image {
   position: absolute;
   top: 215px;
@@ -41,7 +41,7 @@ body {
   height: auto;
 }
 
-/* FRAME COLOR BUTTONS: exact px inside container */
+/* FRAME COLOR BUTTONS */
 .frame-circle-button-wrapper {
   position: absolute;
   top: 325px;
@@ -85,7 +85,7 @@ body {
     background-color: #f0f0f0;
 }
 
-/* COLORS / IMAGES (same as you had) */
+/* COLORS / IMAGES */
 .circle-btn.white { background-color: #FFFEEF; }
 .circle-btn.black { background-color: #000000; }
 .circle-btn.pink { background-color: #FDC8C8; }
