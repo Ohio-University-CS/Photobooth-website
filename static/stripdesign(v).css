@@ -1,99 +1,83 @@
 @font-face { 
-    font-family: 'Kapakana'; 
-    src: url("/static/assets/kapakana-font/Kapakana-VariableFont_wght.ttf") format("truetype");
+  font-family: 'Kapakana'; 
+  src: url("/static/assets/kapakana-font/Kapakana-VariableFont_wght.ttf") format("truetype");
 }
 
-/* ————————————————————————————————
-   PAGE BACKGROUND
-———————————————————————————————— */
 body {
   margin: 0;
   padding: 0;
-
   background-image: url("/static/assets/checkered-floor.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
-
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
 
-/* ————————————————————————————————
-   MAIN CONTAINER
-———————————————————————————————— */
+/* Fixed-size anchor: MUST match your foreground image size */
 .photo-container { 
-    position: relative; 
-    display: inline-block; 
-    width: 950px;     /* fixed reference width */
-} 
+  position: relative; 
+  width: 950px;
+  height: 750px;   /* set this to your actual image height */
+  overflow: hidden;
+}
 
 .foreground-photo {
-  width: 100%;        /* scales everything proportionally */
-  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 950px;
+  height: 750px;   /* same as container */
 }
 
-/* ————————————————————————————————
-   CANVAS (positioned relative to image)
-———————————————————————————————— */
+/* Canvas aligned in exact px inside the image */
 .frame-image {
-    position: absolute;
-    top: 27%;          /* was 180px → now proportional */
-    left: 21.5%;       /* was 203px */
-    width: 26%;        /* was 250px of 950px */
-    height: auto;
-    object-fit: fill;
+  position: absolute;
+  top: 215px;
+  left: 203px;
+  width: 250px;
+  height: auto;
 }
 
-/* ————————————————————————————————
-   FRAME COLOR BUTTONS
-———————————————————————————————— */
+/* FRAME COLOR BUTTONS: exact px inside container */
 .frame-circle-button-wrapper {
-    position: absolute;
-    top: 45%;          /* was 425px */
-    right: 28%;         /* converted from right:455px */
-    transform: translate(-50%, -50%);
-
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    width: 14%;        /* proportional to image width */
-    justify-content: center;
+  position: absolute;
+  top: 325px;
+  left: 605px;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 250px;
+  justify-content: center;
 }
 
-/* ————————————————————————————————
-   FILTER BUTTONS
-———————————————————————————————— */
+/* FILTER BUTTONS */
 .filter-circle-button-wrapper {
-    position: absolute;
-    top: 64%;          /* was 600px */
-    right: 34%;         /* converted from right:585px */
-    transform: translate(-50%, -50%);
-
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    width: 8%;        /* proportional */
-    justify-content: center;
+  position: absolute;
+  top: 525px;
+  left: 605px;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 120px;
+  justify-content: center;
 }
 
-/* ————————————————————————————————
-   BUTTON STYLE
-———————————————————————————————— */
+/* BUTTON BASE */
 .circle-btn {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    border: none;
-    box-shadow: 0 4px 4px rgba(0,0,0,0.2);
-    font-size: 20px;
-    cursor: pointer;
-    transition: 0.2s ease;
-    background-size: cover;
-    background-position: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  box-shadow: 0 4px 4px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: 0.2s ease;
+  background-size: cover;
+  background-position: center;
 }
 
 .circle-btn:hover {
@@ -101,9 +85,7 @@ body {
     background-color: #f0f0f0;
 }
 
-/* ————————————————————————————————
-   FRAME COLOR BUTTON COLORS
-———————————————————————————————— */
+/* COLORS / IMAGES (same as you had) */
 .circle-btn.white { background-color: #FFFEEF; }
 .circle-btn.black { background-color: #000000; }
 .circle-btn.pink { background-color: #FDC8C8; }
@@ -114,32 +96,25 @@ body {
 .circle-btn.black-polka { background-image: url("/static/assets/frame-buttons/black-polka.png"); }
 .circle-btn.red-polka { background-image: url("/static/assets/frame-buttons/red-polka.jpeg"); }
 
-/* ————————————————————————————————
-   FILTER BUTTONS
-———————————————————————————————— */
 .circle-btn.none { background-image: url("/static/assets/filter-buttons/filter-none.png"); }
 .circle-btn.bnw { background-image: url("/static/assets/filter-buttons/filter-bnw.png"); }
 .circle-btn.bright { background-image: url("/static/assets/filter-buttons/filter-bright.png"); }
 .circle-btn.vintage { background-image: url("/static/assets/filter-buttons/filter-vintage.png"); }
 
-/* ————————————————————————————————
-   CONTINUE BUTTON
-———————————————————————————————— */
+/* CONTINUE BUTTON */
 .photo-button { 
-    position: absolute; 
-    top: 75%;          /* was 700px */
-    right: 22%;         /* converted from right:360px */
-    transform: translate(-50%, -50%);
-
-    padding: 5px 10px; 
-    font-size: 25px; 
-    font-family: 'Kapakana', sans-serif;
-    color: #632424;
-
-    border: none; 
-    border-radius: 8px; 
-    background-color:#FEE9E7; 
-    cursor: pointer; 
-    transition: 0.2s ease; 
-    box-shadow: -4px 4px 2px #835c5c;
+  position: absolute; 
+  top: 650px;
+  left: 875px;
+  transform: translate(-50%, -50%); 
+  padding: 5px 10px; 
+  font-size: 25px; 
+  font-family: 'Kapakana', sans-serif;
+  color: #632424;
+  border: none; 
+  border-radius: 8px; 
+  background-color:#FEE9E7; 
+  cursor: pointer; 
+  transition: 0.2s ease; 
+  box-shadow: -4px 4px 2px #835c5c;
 }

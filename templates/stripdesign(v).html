@@ -7,34 +7,40 @@
 </head>
 
 <body>
-    <div class="photo-container">
-      <img src="{{ url_for('static', filename='assets/strip-design(v).png') }}" class="foreground-photo" alt="Strip design photo">
-      
-      <!-- Canvas replaces the frame-image img -->
-      <canvas id="stripCanvas" class="frame-image"></canvas>
-    </div>
+  <div class="photo-container">
+    <img src="{{ url_for('static', filename='assets/strip-design(v).png') }}"
+         class="foreground-photo"
+         alt="Strip design photo">
 
+    <!-- Canvas on top of image -->
+    <canvas id="stripCanvas" class="frame-image"></canvas>
+
+    <!-- FRAME COLOR BUTTONS (now inside photo-container) -->
     <div class="frame-circle-button-wrapper">
-        <button class="circle-btn white"       onclick="selectFrame('white')"></button>
-        <button class="circle-btn black"       onclick="selectFrame('black')"></button>
-        <button class="circle-btn pink"        onclick="selectFrame('pink')"></button>
-        <button class="circle-btn blue"        onclick="selectFrame('blue')"></button>
-        <button class="circle-btn green"       onclick="selectFrame('green')"></button>
-        <button class="circle-btn white-polka" onclick="selectFrame('white-polka')"></button>
-        <button class="circle-btn black-polka" onclick="selectFrame('black-polka')"></button>
-        <button class="circle-btn red-polka"   onclick="selectFrame('red-polka')"></button>
+      <button class="circle-btn white"       onclick="selectFrame('white')"></button>
+      <button class="circle-btn black"       onclick="selectFrame('black')"></button>
+      <button class="circle-btn pink"        onclick="selectFrame('pink')"></button>
+      <button class="circle-btn blue"        onclick="selectFrame('blue')"></button>
+      <button class="circle-btn green"       onclick="selectFrame('green')"></button>
+      <button class="circle-btn white-polka" onclick="selectFrame('white-polka')"></button>
+      <button class="circle-btn black-polka" onclick="selectFrame('black-polka')"></button>
+      <button class="circle-btn red-polka"   onclick="selectFrame('red-polka')"></button>
     </div>
 
+    <!-- FILTER BUTTONS -->
     <div class="filter-circle-button-wrapper">
-        <button class="circle-btn none"    onclick="selectFilter('none')"></button>
-        <button class="circle-btn bnw"     onclick="selectFilter('bnw')"></button>
-        <button class="circle-btn vintage" onclick="selectFilter('vintage')"></button>
-        <button class="circle-btn bright"  onclick="selectFilter('bright')"></button>
+      <button class="circle-btn none"    onclick="selectFilter('none')"></button>
+      <button class="circle-btn bnw"     onclick="selectFilter('bnw')"></button>
+      <button class="circle-btn vintage" onclick="selectFilter('vintage')"></button>
+      <button class="circle-btn bright"  onclick="selectFilter('bright')"></button>
     </div>
 
-    <div>
-        <a class="photo-button" href="{{ url_for('stripselect.stickerpagev') }}">Continue</a>
-    </div>
+    <!-- CONTINUE BUTTON -->
+    <a class="photo-button" href="{{ url_for('stripselect.stickerpagev') }}">Continue</a>
+  </div>
+
+  <!-- your JS stays exactly the same -->
+</body>
 
     <script>
         // ── Frame PNG paths ──────────────────────────────────────────────
