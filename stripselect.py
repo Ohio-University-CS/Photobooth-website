@@ -44,12 +44,12 @@ def camera():
 #function to save users photos, called by the camerapage.html script when the user takes a photo
 def take_photos():
 
-    #gets users photo, 
+    #gets users photo,
     #need to send it here as a json object with the key "image"
     data = request.json.get("image")
     if not data:
         return "Error, no photo recieved"
-    
+
     #saves the pohto to the static/photos directory
     #The filename has the users session id and the photo count to make it unique
     image_data = base64.b64decode(data.split(",")[1])
@@ -62,9 +62,11 @@ def take_photos():
     with open(filename, "wb") as f:
         f.write(image_data)
 
+    # Track saved photos in session for later retrieval
     saved = session.get("saved_photos", [])
     saved.append(filename)
     session["saved_photos"] = saved
+
     #tells camerapage.html how many photos have been taken and how many are left, so it can update the UI
     #and also tells it if the user is done taking photos
     count = session.get("photo_count", 1)
@@ -115,3 +117,11 @@ def stickerpageh():
 def stripcollect():
     return render_template("stripcollect.html")
 
+from flask import jsonify
+
+@stripselect_bp.route("/get_photos")
+def get_photos():
+    photos = session.get("saved_photos", [])
+    button = session.get("button_name", "fourbyone")
+    web_paths = ["/" + p for p in photos]
+    return jsonify({"photos": web_paths, "button": button})

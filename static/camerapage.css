@@ -20,12 +20,8 @@ body {
   height: 100vh;
 }
 
-.photo-container { 
-    position: relative; 
-    display: inline-block; 
-} 
 .foreground-photo {
-  width: 950px;        
+  width: 950px;
   padding-left: 10px;
 }
 
