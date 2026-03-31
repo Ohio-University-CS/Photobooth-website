@@ -117,3 +117,11 @@ def stickerpageh():
 def stripcollect():
     return render_template("stripcollect.html")
 
+from flask import jsonify
+
+@stripselect_bp.route("/get_photos")
+def get_photos():
+    photos = session.get("saved_photos", [])
+    button = session.get("button_name", "fourbyone")
+    web_paths = ["/" + p for p in photos]
+    return jsonify({"photos": web_paths, "button": button})
