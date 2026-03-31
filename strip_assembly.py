@@ -13,4 +13,5 @@ LAYOUTS = {
 
 
 def create_strip(photo_paths: list, layout: str, output_path: str) -> str:
+    pass
     

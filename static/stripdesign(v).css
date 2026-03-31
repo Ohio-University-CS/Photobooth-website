@@ -3,6 +3,9 @@
     src: url("/static/assets/kapakana-font/Kapakana-VariableFont_wght.ttf") format("truetype");
 }
 
+/* ————————————————————————————————
+   PAGE BACKGROUND
+———————————————————————————————— */
 body {
   margin: 0;
   padding: 0;
@@ -19,51 +22,67 @@ body {
   height: 100vh;
 }
 
+/* ————————————————————————————————
+   MAIN CONTAINER
+———————————————————————————————— */
 .photo-container { 
     position: relative; 
     display: inline-block; 
-    width: 950px;
+    width: 950px;     /* fixed reference width */
 } 
 
 .foreground-photo {
-  width: 950px;
+  width: 100%;        /* scales everything proportionally */
+  display: block;
 }
 
+/* ————————————————————————————————
+   CANVAS (positioned relative to image)
+———————————————————————————————— */
 .frame-image {
     position: absolute;
-    top: 180px;
-    left: 203px;
-    width: 250px;
+    top: 27%;          /* was 180px → now proportional */
+    left: 21.5%;       /* was 203px */
+    width: 26%;        /* was 250px of 950px */
     height: auto;
     object-fit: fill;
 }
 
+/* ————————————————————————————————
+   FRAME COLOR BUTTONS
+———————————————————————————————— */
 .frame-circle-button-wrapper {
     position: absolute;
-    top: 370px;
-    right: 386px;
+    top: 45%;          /* was 425px */
+    right: 28%;         /* converted from right:455px */
     transform: translate(-50%, -50%);
 
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    width: 250px;
+    width: 14%;        /* proportional to image width */
     justify-content: center;
 }
 
+/* ————————————————————————————————
+   FILTER BUTTONS
+———————————————————————————————— */
 .filter-circle-button-wrapper {
     position: absolute;
-    top: 550px;
-    right: 520px;
+    top: 64%;          /* was 600px */
+    right: 34%;         /* converted from right:585px */
     transform: translate(-50%, -50%);
 
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    width: 120px;
+    width: 8%;        /* proportional */
     justify-content: center;
 }
 
+/* ————————————————————————————————
+   BUTTON STYLE
+———————————————————————————————— */
 .circle-btn {
     width: 42px;
     height: 42px;
@@ -73,6 +92,8 @@ body {
     font-size: 20px;
     cursor: pointer;
     transition: 0.2s ease;
+    background-size: cover;
+    background-position: center;
 }
 
 .circle-btn:hover {
@@ -80,72 +101,45 @@ body {
     background-color: #f0f0f0;
 }
 
-.circle-btn.white {
-  background-color: #FFFEEF;
-}
-.circle-btn.black {
-  background-color: #000000;
-}
-.circle-btn.pink {
-  background-color: #FDC8C8;
-}
-.circle-btn.blue {
-  background-color: #CBE3EB;
-}
-.circle-btn.green {
-  background-color: #ACC0AC;
-}
-.circle-btn.white-polka {
-  background-image: url("/static/assets/frame-buttons/white-polka.jpeg");
-  background-size: cover;
-  background-position: center;
-}
-.circle-btn.black-polka {
-  background-image: url("/static/assets/frame-buttons/black-polka.png");
-  background-size: cover;
-  background-position: center;
-}
-.circle-btn.red-polka {
-  background-image: url("/static/assets/frame-buttons/red-polka.jpeg");
-  background-size: cover;
-  background-position: center;
-}
-.circle-btn.none {
-  background-image: url("/static/assets/filter-buttons/filter-none.png");
-  background-size: cover;
-  background-position: center;
-}
-.circle-btn.bnw {
-  background-image: url("/static/assets/filter-buttons/filter-b:w.png");
-  background-size: cover;
-  background-position: center;
-}
-.circle-btn.bright {
-  background-image: url("/static/assets/filter-buttons/filter-bright.png");
-  background-size: cover;
-  background-position: center;
-}
-.circle-btn.vintage {
-  background-image: url("/static/assets/filter-buttons/filter-vintage.png");
-  background-size: cover;
-  background-position: center;
-}
+/* ————————————————————————————————
+   FRAME COLOR BUTTON COLORS
+———————————————————————————————— */
+.circle-btn.white { background-color: #FFFEEF; }
+.circle-btn.black { background-color: #000000; }
+.circle-btn.pink { background-color: #FDC8C8; }
+.circle-btn.blue { background-color: #CBE3EB; }
+.circle-btn.green { background-color: #ACC0AC; }
 
+.circle-btn.white-polka { background-image: url("/static/assets/frame-buttons/white-polka.jpeg"); }
+.circle-btn.black-polka { background-image: url("/static/assets/frame-buttons/black-polka.png"); }
+.circle-btn.red-polka { background-image: url("/static/assets/frame-buttons/red-polka.jpeg"); }
+
+/* ————————————————————————————————
+   FILTER BUTTONS
+———————————————————————————————— */
+.circle-btn.none { background-image: url("/static/assets/filter-buttons/filter-none.png"); }
+.circle-btn.bnw { background-image: url("/static/assets/filter-buttons/filter-bnw.png"); }
+.circle-btn.bright { background-image: url("/static/assets/filter-buttons/filter-bright.png"); }
+.circle-btn.vintage { background-image: url("/static/assets/filter-buttons/filter-vintage.png"); }
+
+/* ————————————————————————————————
+   CONTINUE BUTTON
+———————————————————————————————— */
 .photo-button { 
     position: absolute; 
-    top: 700px;
-    right: 300px;
-    transform: translate(-50%, -50%); 
+    top: 75%;          /* was 700px */
+    right: 22%;         /* converted from right:360px */
+    transform: translate(-50%, -50%);
+
     padding: 5px 10px; 
     font-size: 25px; 
     font-family: 'Kapakana', sans-serif;
     color: #632424;
+
     border: none; 
     border-radius: 8px; 
     background-color:#FEE9E7; 
     cursor: pointer; 
     transition: 0.2s ease; 
     box-shadow: -4px 4px 2px #835c5c;
-} 
-
-
+}
