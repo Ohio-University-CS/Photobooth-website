@@ -29,10 +29,19 @@ body {
   width: 950px;
 }
 
+.frame-image.fourbyone {
+    position: absolute;
+    top: 180px;
+    left: 203px;
+    width: 250px;
+    height: auto;
+    object-fit: fill;
+}
+
 .frame-circle-button-wrapper {
     position: absolute;
-    top: 45%;
-    right: 27.25%;
+    top: 370px;
+    right: 386px;
     transform: translate(-50%, -50%);
 
     display: flex;
@@ -44,8 +53,8 @@ body {
 
 .filter-circle-button-wrapper {
     position: absolute;
-    top: 65%;
-    right: 35%;
+    top: 550px;
+    right: 520px;
     transform: translate(-50%, -50%);
 
     display: flex;
@@ -125,7 +134,7 @@ body {
 .photo-button { 
     position: absolute; 
     top: 700px;
-    right: 360px;
+    right: 300px;
     transform: translate(-50%, -50%); 
     padding: 5px 10px; 
     font-size: 25px; 

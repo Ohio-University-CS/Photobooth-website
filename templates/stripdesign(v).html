@@ -7,30 +7,220 @@
 </head>
 
 <body>
-    <div class="photo-container"> 
-      <img src="{{ url_for('static', filename='assets/strip-design(v).png') }}" class="foreground-photo" alt="Strip design photo"> 
+    <div class="photo-container">
+      <img src="{{ url_for('static', filename='assets/strip-design(v).png') }}" class="foreground-photo" alt="Strip design photo">
+      
+      <!-- Canvas replaces the frame-image img -->
+      <canvas id="stripCanvas" class="frame-image"></canvas>
     </div>
 
     <div class="frame-circle-button-wrapper">
-        <button class="circle-btn white"> </button>
-        <button class="circle-btn black"> </button>
-        <button class="circle-btn pink"> </button>
-        <button class="circle-btn blue"> </button>
-        <button class="circle-btn green"> </button>
-        <button class="circle-btn white-polka"> </button>
-        <button class="circle-btn black-polka"> </button>
-        <button class="circle-btn red-polka"> </button>
+        <button class="circle-btn white"       onclick="selectFrame('white')"></button>
+        <button class="circle-btn black"       onclick="selectFrame('black')"></button>
+        <button class="circle-btn pink"        onclick="selectFrame('pink')"></button>
+        <button class="circle-btn blue"        onclick="selectFrame('blue')"></button>
+        <button class="circle-btn green"       onclick="selectFrame('green')"></button>
+        <button class="circle-btn white-polka" onclick="selectFrame('white-polka')"></button>
+        <button class="circle-btn black-polka" onclick="selectFrame('black-polka')"></button>
+        <button class="circle-btn red-polka"   onclick="selectFrame('red-polka')"></button>
     </div>
 
     <div class="filter-circle-button-wrapper">
-        <button class="circle-btn none"> </button>
-        <button class="circle-btn bnw"> </button>
-        <button class="circle-btn vintage"> </button>
-        <button class="circle-btn bright"> </button>
+        <button class="circle-btn none"    onclick="selectFilter('none')"></button>
+        <button class="circle-btn bnw"     onclick="selectFilter('bnw')"></button>
+        <button class="circle-btn vintage" onclick="selectFilter('vintage')"></button>
+        <button class="circle-btn bright"  onclick="selectFilter('bright')"></button>
     </div>
 
     <div>
-        <a class="photo-button" href="{{ url_for('stripselect.stickerpagev') }}"> Continue </a>
+        <a class="photo-button" href="{{ url_for('stripselect.stickerpagev') }}">Continue</a>
     </div>
 
+    <script>
+        // ── Frame PNG paths ──────────────────────────────────────────────
+        const FRAME_MAP = {
+            "fourbyone":  "/static/assets/frames/4x1.png",
+            "twobytwo":   "/static/assets/frames/2x2.png",
+            "fourbytwo":  "/static/assets/frames/4x2.png",
+            "onebythree": "/static/assets/frames/1x3.png",
+            "onebyfour":  "/static/assets/frames/1x4.png",
+        };
+
+        // ── Photo slot definitions per frame (x, y, w, h in canvas px) ──
+        // Adjust these numbers once you can measure your actual frame PNGs
+        const FRAME_SLOTS = {
+            "fourbyone":  [
+                { x: 165, y: 28,  w: 325, h: 264 },
+                { x: 165, y: 240, w: 325, h: 264 },
+                { x: 165, y: 468, w: 325, h: 264 },
+                { x: 165, y: 673, w: 325, h: 264 },
+            ], 
+            "twobytwo":   [
+                { x: 18,  y: 18,  w: 100, h: 39 },
+                { x: 148, y: 18,  w: 100, h: 39 },
+                { x: 18,  y: 213, w: 100, h: 39 },
+                { x: 148, y: 213, w: 100, h: 39 },
+            ],
+            "fourbytwo":  [
+                { x: 18,  y: 18,  w: 114, h: 183 },
+                { x: 148, y: 18,  w: 114, h: 183 },
+                { x: 18,  y: 213, w: 114, h: 183 },
+                { x: 148, y: 213, w: 114, h: 183 },
+                { x: 18,  y: 408, w: 114, h: 183 },
+                { x: 148, y: 408, w: 114, h: 183 },
+                { x: 18,  y: 603, w: 114, h: 183 },
+                { x: 148, y: 603, w: 114, h: 183 },
+            ],
+            "onebythree": [
+                { x: 18, y: 18,  w: 244, h: 183 },
+                { x: 18, y: 213, w: 244, h: 183 },
+                { x: 18, y: 408, w: 244, h: 183 },
+            ],
+            "onebyfour":  [
+                { x: 18, y: 18,  w: 244, h: 183 },
+                { x: 18, y: 213, w: 244, h: 183 },
+                { x: 18, y: 408, w: 244, h: 183 },
+                { x: 18, y: 603, w: 244, h: 183 },
+            ],
+        };
+
+        // ── State ────────────────────────────────────────────────────────
+        let currentFrameKey  = "fourbyone";
+        let currentFrameSrc  = "";
+        let currentFilter    = "none";
+        let currentFrameColor = "white";
+        let userPhotos       = [];   // will be filled from your /get_photos endpoint
+
+        const canvas = document.getElementById("stripCanvas");
+        const ctx    = canvas.getContext("2d");
+
+        // ── Helpers ──────────────────────────────────────────────────────
+        function loadImage(src) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.crossOrigin = "anonymous";
+                img.onload  = () => resolve(img);
+                img.onerror = reject;
+                img.src = src;
+            });
+        }
+
+        function applyFilter(ctx, filter, x, y, w, h) {
+            if (filter === "none") return;
+            const imageData = ctx.getImageData(x, y, w, h);
+            const d = imageData.data;
+
+            for (let i = 0; i < d.length; i += 4) {
+                let r = d[i], g = d[i+1], b = d[i+2];
+
+                if (filter === "bnw") {
+                    const gray = 0.299*r + 0.587*g + 0.114*b;
+                    d[i] = d[i+1] = d[i+2] = gray;
+
+                } else if (filter === "vintage") {
+                    d[i]   = Math.min(255, r * 1.1 + 30);
+                    d[i+1] = Math.min(255, g * 0.9 + 10);
+                    d[i+2] = Math.min(255, b * 0.7);
+
+                } else if (filter === "bright") {
+                    d[i]   = Math.min(255, r * 1.2);
+                    d[i+1] = Math.min(255, g * 1.2);
+                    d[i+2] = Math.min(255, b * 1.2);
+                }
+            }
+            ctx.putImageData(imageData, x, y);
+        }
+
+        // ── Main render ──────────────────────────────────────────────────
+        async function renderStrip() {
+            const slots     = FRAME_SLOTS[currentFrameKey];
+            const frameImg  = await loadImage(currentFrameSrc);
+
+            // Size canvas to match the frame PNG exactly
+            canvas.width  = frameImg.naturalWidth;
+            canvas.height = frameImg.naturalHeight;
+
+            // 1. Draw each user photo into its slot
+            for (let i = 0; i < slots.length; i++) {
+                const s = slots[i];
+                if (userPhotos[i]) {
+                    const photo = await loadImage(userPhotos[i]);
+                    const slotAspect = s.w / s.h;
+                    const imgAspect = photo.naturalWidth / photo.naturalHeight;
+
+                    let sx, sy, sWidth, sHeight;
+                    if (imgAspect > slotAspect) {
+                        // Image is wider than slot: crop sides
+                        sHeight = photo.naturalHeight;
+                        sWidth = sHeight * slotAspect;
+                        sx = (photo.naturalWidth - sWidth) / 2;
+                        sy = 0;
+                    } 
+                    else {
+                        // Image is taller than slot: crop top/bottom
+                        sWidth = photo.naturalWidth;
+                        sHeight = sWidth / slotAspect;
+                        sx = 0;
+                        if (sHeight > photo.naturalHeight) {
+                            sHeight = photo.naturalHeight;
+                            sy = 0;
+                        } 
+                        else {
+                            sy = (photo.naturalHeight - sHeight) / 2;
+                        }
+                    }
+
+                    // scale cropped region to cover the slot without distortion
+                    const scale = Math.max(s.w / sWidth, s.h / sHeight);
+                    const drawW = sWidth * scale;
+                    const drawH = sHeight * scale;
+
+                    // center inside the slot
+                    const dx = s.x + (s.w - drawW) / 2;
+                    const dy = s.y + (s.h - drawH) / 2;
+
+                    ctx.drawImage(photo, sx, sy, sWidth, sHeight, dx, dy, drawW, drawH);
+                    applyFilter(ctx, currentFilter, s.x, s.y, s.w, s.h);
+                } 
+                else {
+                    // placeholder if no photo yet
+                    ctx.fillStyle = "#e0e0e0";
+                    ctx.fillRect(s.x, s.y, s.w, s.h);
+                }
+            }
+
+            // 2. Draw frame on top — it naturally masks the photos
+            ctx.drawImage(frameImg, 0, 0, canvas.width, canvas.height);
+        }
+
+        // ui handlers
+        function selectFrame(color) {
+            currentFrameColor = color;
+            // Map color name, actual frame file for the current layout
+            // e.g. "fourbyone" + "pink" → "4x1-pink.png"
+            currentFrameSrc = `/static/assets/frames/${currentFrameKey}-${color}.png`;
+            renderStrip();
+        }
+
+        function selectFilter(filter) {
+            currentFilter = filter;
+            renderStrip();
+        }
+
+        
+        async function init() {
+            const res  = await fetch("/stripselect/get_photos");
+            const data = await res.json();
+
+            currentFrameKey = data.button || "fourbyone";
+            userPhotos      = data.photos || [];   // expect an array of URLs/paths
+
+            // Default to white frame on load
+            currentFrameSrc = FRAME_MAP[currentFrameKey];
+            await renderStrip();
+        }
+
+        init();
+    </script>
 </body>
+</html>
