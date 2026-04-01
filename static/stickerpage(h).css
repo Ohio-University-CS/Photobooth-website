@@ -22,7 +22,7 @@ body {
 .photo-container { 
     position: relative; 
     display: inline-block; 
-    width: 950px;
+    width: 9100px;
 } 
 
 .foreground-photo {
@@ -45,3 +45,5 @@ body {
     transition: 0.2s ease; 
     box-shadow: -4px 4px 2px #835c5c;
 } 
+
+

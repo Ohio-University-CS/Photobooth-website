@@ -71,6 +71,7 @@ body {
     background-position: center;
 }
 
+
 .circle-btn:hover {
     transform: scale(1.1);
     background-color: #f0f0f0;
@@ -109,3 +110,15 @@ body {
     transition: 0.2s ease; 
     box-shadow: -4px 4px 2px #835c5c;
 }
+/** change this to adjust the position of the frame */
+.frame-image {
+  position: absolute;
+  top: 190px;
+  left: 230px;
+  width: 500px;
+  height: auto;
+}
+
+
+
+
