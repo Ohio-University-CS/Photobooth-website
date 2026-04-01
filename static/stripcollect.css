@@ -49,11 +49,11 @@ body {
 }
 
 .photo-button.download{
-   top: 72%;
-   left: 43%;
+   top: 612px;
+   left: 670px;
 }
 
 .photo-button.restart{
-   top: 72%;
-   right: 38%;
+   top: 612px;
+   left: 865px;
 }
