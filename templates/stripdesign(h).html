@@ -8,30 +8,34 @@
 
 <body>
     <div class="photo-container"> 
-      <img src="{{ url_for('static', filename='assets/strip-design(h).png') }}" class="foreground-photo" alt="Strip design photo">
-      <canvas id="stripCanvas" class="frame-image"></canvas>
-    </div>
+        <img src="{{ url_for('static', filename='assets/strip-design(h).png') }}"
+             class="foreground-photo"
+             alt="Strip design photo">
 
     <div class="frame-circle-button-wrapper">
-        <button class="circle-btn white"       onclick="selectFrame('white')"></button>
-        <button class="circle-btn black"       onclick="selectFrame('black')"></button>
-        <button class="circle-btn pink"        onclick="selectFrame('pink')"></button>
-        <button class="circle-btn blue"        onclick="selectFrame('blue')"></button>
-        <button class="circle-btn green"       onclick="selectFrame('green')"></button>
-        <button class="circle-btn white-polka" onclick="selectFrame('white-polka')"></button>
-        <button class="circle-btn black-polka" onclick="selectFrame('black-polka')"></button>
-        <button class="circle-btn red-polka"   onclick="selectFrame('red-polka')"></button>
+        <button class="circle-btn white"> </button>
+        <button class="circle-btn black"> </button>
+        <button class="circle-btn pink"> </button>
+        <button class="circle-btn blue"> </button>
+        <button class="circle-btn green"> </button>
+        <button class="circle-btn white-polka"> </button>
+        <button class="circle-btn black-polka"> </button>
+        <button class="circle-btn red-polka"> </button>
     </div>
 
-    <div class="filter-circle-button-wrapper">
-        <button class="circle-btn none"    onclick="selectFilter('none')"></button>
-        <button class="circle-btn bnw"     onclick="selectFilter('bnw')"></button>
-        <button class="circle-btn vintage" onclick="selectFilter('vintage')"></button>
-        <button class="circle-btn bright"  onclick="selectFilter('bright')"></button>
-    </div>
+        <!-- FILTER BUTTONS -->
+        <div class="filter-circle-button-wrapper">
+            <button class="circle-btn none"></button>
+            <button class="circle-btn bnw"></button>
+            <button class="circle-btn vintage"></button>
+            <button class="circle-btn bright"></button>
+        </div>
 
-    <div>
-        <a class="photo-button" href="{{ url_for('stripselect.stickerpageh') }}">Continue</a>
+        <!-- CONTINUE BUTTON -->
+        <a class="photo-button"
+           href="{{ url_for('stripselect.stickerpageh') }}">
+           Continue
+        </a>
     </div>
 
     <script>
@@ -162,5 +166,6 @@
         init();
     </script>
 </body>
+
 </html>
 </html>
