@@ -19,14 +19,20 @@ body {
   height: 100vh;
 }
 
+
 .photo-container { 
     position: relative; 
-    display: inline-block; 
     width: 950px;
+    height: 750px;   
+    overflow: hidden;
 } 
 
 .foreground-photo {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 950px;
+  height: 750px;  
 }
 
 .photo-button { 
@@ -43,52 +49,53 @@ body {
     transition: 0.2s ease; 
     box-shadow: -4px 4px 2px #FEE9E7;
 } 
+
 .photo-button:hover { 
     background-color: #633939; 
     color:#FEE9E7;
 }
 
 .photo-button.download{
-   top: 612px;
-   left: 670px;
+   top: 605px;
+   left: 325px;
 }
 
 .photo-button.restart{
-   top: 612px;
-   left: 865px;
+   top: 605px;
+   left: 625px;
 }
 .strip-preview-onebythree {
   position: absolute;
-  top: 190px;      /* adjust to fit over the frame area in strip-collect.png */
+  top: 200px;     
   left: 50%;
   transform: translateX(-50%);
-  width: 500px;   /* adjust to match the frame size */
+  width: 500px;   
 }
 
 .strip-preview-fourbyone {
   position: absolute;
-  top: 170px;      
+  top: 190px;      
   left: 50%;
   transform: translateX(-50%);
   width: 200px;   
 }
 .strip-preview-twobytwo{
     position: absolute;
-    top: 170px;      
+    top: 190px;      
     left: 50%;
     transform: translateX(-50%);
     width: 200px
 }
 .strip-preview-fourbytwo{
     position: absolute;
-    top: 170px;      
+    top: 190px;      
     left: 50%;
     transform: translateX(-50%);
     width: 200px
 }
 .strip-preview-onebyfour{
     position: absolute;
-    top: 190px;      
+    top: 200px;      
     left: 50%;
     transform: translateX(-50%);
     width: 400px
