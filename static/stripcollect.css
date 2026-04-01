@@ -57,3 +57,39 @@ body {
    top: 612px;
    left: 865px;
 }
+.strip-preview-onebythree {
+  position: absolute;
+  top: 190px;      /* adjust to fit over the frame area in strip-collect.png */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;   /* adjust to match the frame size */
+}
+
+.strip-preview-fourbyone {
+  position: absolute;
+  top: 170px;      
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;   
+}
+.strip-preview-twobytwo{
+    position: absolute;
+    top: 170px;      
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px
+}
+.strip-preview-fourbytwo{
+    position: absolute;
+    top: 170px;      
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px
+}
+.strip-preview-onebyfour{
+    position: absolute;
+    top: 190px;      
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px
+}

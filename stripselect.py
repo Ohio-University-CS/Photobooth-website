@@ -125,3 +125,25 @@ def get_photos():
     button = session.get("button_name", "fourbyone")
     web_paths = ["/" + p for p in photos]
     return jsonify({"photos": web_paths, "button": button})
+
+#for downloading the frame
+@stripselect_bp.route("/save_strip", methods=["POST"])
+def save_strip():
+    data = request.json.get("image")
+    if not data:
+        return jsonify({"error": "No image received"}), 400
+    os.makedirs("static/strips", exist_ok=True)
+    image_data = base64.b64decode(data.split(",")[1])
+    filename = f"static/strips/strip_{session.get('button_name', 'unknown')}.png"
+    with open(filename, "wb") as f:
+        f.write(image_data)
+    session["strip_path"] = filename
+    return jsonify({"ok": True, "redirect": url_for("stripselect.stripcollect")})
+
+@stripselect_bp.route("/download_strip")
+def download_strip():
+    from flask import send_file
+    strip_path = session.get("strip_path")
+    if not strip_path or not os.path.exists(strip_path):
+        return "No strip found", 404
+    return send_file(strip_path, as_attachment=True, download_name="photobooth_strip.png") #this is what it saves as on users computer
