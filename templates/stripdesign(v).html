@@ -48,45 +48,32 @@
             "fourbyone":  "/static/assets/frames/4x1.png",
             "twobytwo":   "/static/assets/frames/2x2.png",
             "fourbytwo":  "/static/assets/frames/4x2.png",
-            "onebythree": "/static/assets/frames/1x3.png",
-            "onebyfour":  "/static/assets/frames/1x4.png",
         };
 
         // ── Photo slot definitions per frame (x, y, w, h in canvas px) ──
         // Adjust these numbers once you can measure your actual frame PNGs
         const FRAME_SLOTS = {
             "fourbyone":  [
-                { x: 165, y: 28,  w: 325, h: 264 },
-                { x: 165, y: 240, w: 325, h: 264 },
-                { x: 165, y: 468, w: 325, h: 264 },
-                { x: 165, y: 673, w: 325, h: 264 },
+                { x: 165, y: 29,  w: 324.5, h: 221.25 },
+                { x: 165, y: 240, w: 324.5, h: 221.25 },
+                { x: 165, y: 455, w: 324.5, h: 221.25 },
+                { x: 165, y: 667, w: 324.5, h: 221.25 },
             ], 
             "twobytwo":   [
-                { x: -30,  y: 35,  w: 300, h: 225 },
-                { x: 130, y: 35,  w: 300, h: 225 },
-                { x: -30,  y: 265, w: 300, h: 225 },
-                { x: 130, y: 265, w: 300, h: 225 },
+                { x: 33.5,  y: 35,  w: 180, h: 240 },
+                { x: 200, y: 35,  w: 180, h: 240 },
+                { x: 33.5,  y: 265, w: 180, h: 240 },
+                { x: 200, y: 265, w: 180, h: 240 },
             ],
             "fourbytwo":  [
-                { x: 18,  y: 18,  w: 114, h: 183 },
-                { x: 148, y: 18,  w: 114, h: 183 },
-                { x: 18,  y: 213, w: 114, h: 183 },
-                { x: 148, y: 213, w: 114, h: 183 },
-                { x: 18,  y: 408, w: 114, h: 183 },
-                { x: 148, y: 408, w: 114, h: 183 },
-                { x: 18,  y: 603, w: 114, h: 183 },
-                { x: 148, y: 603, w: 114, h: 183 },
-            ],
-            "onebythree": [
-                { x: 18, y: 18,  w: 244, h: 183 },
-                { x: 18, y: 213, w: 244, h: 183 },
-                { x: 18, y: 408, w: 244, h: 183 },
-            ],
-            "onebyfour":  [
-                { x: 18, y: 18,  w: 244, h: 183 },
-                { x: 18, y: 213, w: 244, h: 183 },
-                { x: 18, y: 408, w: 244, h: 183 },
-                { x: 18, y: 603, w: 244, h: 183 },
+                { x: 55,  y: 58,  w: 199.5, h: 136.8 },
+                { x: 260, y: 58,  w: 199.5, h: 136.8 },
+                { x: 55,  y: 190, w: 199.5, h: 136.8 },
+                { x: 260, y: 190, w: 199.5, h: 136.8 },
+                { x: 55,  y: 320, w: 199.5, h: 136.8 },
+                { x: 260, y: 320, w: 199.5, h: 136.8 },
+                { x: 55,  y: 450, w: 199.5, h: 136.8 },
+                { x: 260, y: 450, w: 199.5, h: 136.8 },
             ],
         };
 
@@ -196,13 +183,30 @@
 
                         let sx, sy, sWidth, sHeight;
                         if (imgAspect > slotAspect) {
-                            // Crop sides
                             sHeight = photo.naturalHeight;
                             sWidth = sHeight * slotAspect;
                             sx = (photo.naturalWidth - sWidth) / 2;
                             sy = 0;
                         } else {
-                            // No crop, just fit
+                            sWidth = photo.naturalWidth;
+                            sHeight = photo.naturalHeight;
+                            sx = 0;
+                            sy = 0;
+                        }
+                        ctx.drawImage(photo, sx, sy, sWidth, sHeight, s.x, s.y, s.w, s.h);
+                    }
+
+                    else if (currentFrameKey == "fourbytwo") {
+                        const slotAspect = s.w / s.h;
+                        const imgAspect = photo.naturalWidth / photo.naturalHeight;
+
+                        let sx, sy, sWidth, sHeight;
+                        if (imgAspect > slotAspect) {
+                            sHeight = photo.naturalHeight;
+                            sWidth = sHeight * slotAspect;
+                            sx = (photo.naturalWidth - sWidth) / 2;
+                            sy = 0;
+                        } else {
                             sWidth = photo.naturalWidth;
                             sHeight = photo.naturalHeight;
                             sx = 0;
@@ -226,10 +230,12 @@
 
         // ui handlers
         function selectFrame(color) {
-    currentFrameColor = color;
-    currentFrameSrc = FRAME_MAP[currentFrameKey]; // just use base frame for now
-    renderStrip();
-}
+            currentFrameColor = color;
+            // Map color name, actual frame file for the current layout
+            // e.g. "fourbyone" + "pink" → "4x1-pink.png"
+            currentFrameSrc = `/static/assets/frames/${currentFrameKey}-${color}.png`;
+            renderStrip();
+        }
 
         function selectFilter(filter) {
             currentFilter = filter;

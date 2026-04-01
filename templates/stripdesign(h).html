@@ -26,10 +26,10 @@
 
         <!-- FILTER BUTTONS -->
         <div class="filter-circle-button-wrapper">
-            <button class="circle-btn none"></button>
-            <button class="circle-btn bnw"></button>
-            <button class="circle-btn vintage"></button>
-            <button class="circle-btn bright"></button>
+            <button class="circle-btn none" onclick="selectFilter('none')"></button>
+            <button class="circle-btn bnw" onclick="selectFilter('bnw')"></button>
+            <button class="circle-btn vintage" onclick="selectFilter('vintage')"></button>
+            <button class="circle-btn bright" onclick="selectFilter('bright')"></button>
         </div>
 
         <!-- CONTINUE BUTTON -->
@@ -51,7 +51,12 @@
                 { x: 487, y: 83, w: 283, h: 334 },
                 { x: 792, y: 83, w: 282, h: 334 },
             ],
-            "onebyfour": [],
+            "onebyfour": [
+                { x: 130, y: 62,  w: 247, h: 299 },
+                { x: 390, y: 62, w: 247, h: 299 },
+                { x: 650, y: 62, w: 247, h: 299 },
+                { x: 900, y: 62, w: 247, h: 299 },
+            ],
         };
 
         let currentFrameKey   = "onebythree";
@@ -96,6 +101,7 @@
         }
 
         async function renderStrip() {
+            canvas.className = "frame-image frame-image-" + currentFrameKey;
             const slots    = FRAME_SLOTS[currentFrameKey];
             const frameImg = await loadImage(currentFrameSrc);
 
@@ -106,36 +112,63 @@
                 const s = slots[i];
                 if (userPhotos[i]) {
                     const photo = await loadImage(userPhotos[i]);
-                    const slotAspect = s.w / s.h;
-                    const imgAspect  = photo.naturalWidth / photo.naturalHeight;
+                    if (currentFrameKey == "onebythree") {
+                        const slotAspect = s.w / s.h;
+                        const imgAspect  = photo.naturalWidth / photo.naturalHeight;
 
-                    let sx, sy, sWidth, sHeight;
-                    if (imgAspect > slotAspect) {
-                        sHeight = photo.naturalHeight;
-                        sWidth  = sHeight * slotAspect;
-                        sx = (photo.naturalWidth - sWidth) / 2;
-                        sy = 0;
-                    } else {
-                        sWidth  = photo.naturalWidth;
-                        sHeight = sWidth / slotAspect;
-                        sx = 0;
-                        if (sHeight > photo.naturalHeight) {
+                        let sx, sy, sWidth, sHeight;
+                        if (imgAspect > slotAspect) {
                             sHeight = photo.naturalHeight;
+                            sWidth  = sHeight * slotAspect;
+                            sx = (photo.naturalWidth - sWidth) / 2;
                             sy = 0;
-                        } else {
-                            sy = (photo.naturalHeight - sHeight) / 2;
+                        } 
+                        else {
+                            sWidth  = photo.naturalWidth;
+                            sHeight = sWidth / slotAspect;
+                            sx = 0;
+                            if (sHeight > photo.naturalHeight) {
+                                sHeight = photo.naturalHeight;
+                                sy = 0;
+                            } 
+                            else {
+                                sy = (photo.naturalHeight - sHeight) / 2;
+                            }
                         }
+
+                        const scale = Math.max(s.w / sWidth, s.h / sHeight);
+                        const drawW = sWidth * scale;
+                        const drawH = sHeight * scale;
+                        const dx = s.x + (s.w - drawW) / 2;
+                        const dy = s.y + (s.h - drawH) / 2;
+
+                        ctx.drawImage(photo, sx, sy, sWidth, sHeight, dx, dy, drawW, drawH);
+                        //applyFilter(ctx, currentFilter, s.x, s.y, s.w, s.h);
                     }
 
-                    const scale = Math.max(s.w / sWidth, s.h / sHeight);
-                    const drawW = sWidth * scale;
-                    const drawH = sHeight * scale;
-                    const dx = s.x + (s.w - drawW) / 2;
-                    const dy = s.y + (s.h - drawH) / 2;
+                    else if (currentFrameKey == "onebyfour") {
+                        const slotAspect = s.w / s.h;
+                        const imgAspect = photo.naturalWidth / photo.naturalHeight;
 
-                    ctx.drawImage(photo, sx, sy, sWidth, sHeight, dx, dy, drawW, drawH);
+                        let sx, sy, sWidth, sHeight;
+                        if (imgAspect > slotAspect) {
+                            sHeight = photo.naturalHeight;
+                            sWidth = sHeight * slotAspect;
+                            sx = (photo.naturalWidth - sWidth) / 2;
+                            sy = 0;
+                        } else {
+                            sWidth = photo.naturalWidth;
+                            sHeight = photo.naturalHeight;
+                            sx = 0;
+                            sy = 0;
+                        }
+                        ctx.drawImage(photo, sx, sy, sWidth, sHeight, s.x, s.y, s.w, s.h);
+                    }
+
                     applyFilter(ctx, currentFilter, s.x, s.y, s.w, s.h);
-                } else {
+
+                } 
+                else {
                     ctx.fillStyle = "#e0e0e0";
                     ctx.fillRect(s.x, s.y, s.w, s.h);
                 }

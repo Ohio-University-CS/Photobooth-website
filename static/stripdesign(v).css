@@ -49,6 +49,14 @@ body {
   height: auto;
 }
 
+.frame-image-fourbytwo {
+  position: absolute;
+  top: 245px;
+  left: 197px;
+  width: 250px;
+  height: auto;
+}
+
 /* FRAME COLOR BUTTONS */
 .frame-circle-button-wrapper {
   position: absolute;

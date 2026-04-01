@@ -111,10 +111,18 @@ body {
     box-shadow: -4px 4px 2px #835c5c;
 }
 /** change this to adjust the position of the frame */
-.frame-image {
+.frame-image-onebythree {
   position: absolute;
-  top: 190px;
-  left: 230px;
+  top: 210px;
+  left: 235px;
+  width: 500px;
+  height: auto;
+}
+
+.frame-image-onebyfour {
+  position: absolute;
+  top: 220px;
+  left: 220px;
   width: 500px;
   height: auto;
 }
