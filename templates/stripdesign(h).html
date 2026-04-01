@@ -31,12 +31,8 @@
             <button class="circle-btn vintage" onclick="selectFilter('vintage')"></button>
             <button class="circle-btn bright" onclick="selectFilter('bright')"></button>
         </div>
-
-        <!-- CONTINUE BUTTON - EDIT LATER -->
-          <a class="photo-button"
-              href="{{ url_for('stripselect.stripcollect') }}"> <!-- EDIT THIS LATER TO GO TO STICKER PAGE -->
-              Continue
-          </a>
+        <!-- CONTINUE BUTTON, CHANGE saveANDContinue function to re route to sticker page in future-->
+    <button class="photo-button" onclick="saveAndContinue()">Continue</button>
     </div>
 
     <script>
@@ -186,6 +182,18 @@
         function selectFilter(filter) {
             currentFilter = filter;
             renderStrip();
+        }
+
+        async function saveAndContinue() {
+            await renderStrip();
+            const dataURL = canvas.toDataURL("image/png");
+            const res = await fetch("/stripselect/save_strip", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ image: dataURL })
+            });
+            const data = await res.json();
+            if (data.redirect) window.location.href = data.redirect;
         }
 
         async function init() {
