@@ -33,10 +33,18 @@ body {
 }
 
 
-.frame-image {
+.frame-image-fourbyone {
   position: absolute;
   top: 215px;
   left: 203px;
+  width: 250px;
+  height: auto;
+}
+
+.frame-image-twobytwo {
+  position: absolute;
+  top: 250px;
+  left: 200px;
   width: 250px;
   height: auto;
 }
