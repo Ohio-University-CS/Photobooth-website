@@ -62,10 +62,10 @@
                 { x: 165, y: 673, w: 325, h: 264 },
             ], 
             "twobytwo":   [
-                { x: 18,  y: 18,  w: 100, h: 39 },
-                { x: 148, y: 18,  w: 100, h: 39 },
-                { x: 18,  y: 213, w: 100, h: 39 },
-                { x: 148, y: 213, w: 100, h: 39 },
+                { x: -30,  y: 35,  w: 300, h: 225 },
+                { x: 130, y: 35,  w: 300, h: 225 },
+                { x: -30,  y: 265, w: 300, h: 225 },
+                { x: 130, y: 265, w: 300, h: 225 },
             ],
             "fourbytwo":  [
                 { x: 18,  y: 18,  w: 114, h: 183 },
@@ -139,6 +139,7 @@
 
         // ── Main render ──────────────────────────────────────────────────
         async function renderStrip() {
+            canvas.className = "frame-image frame-image-" + currentFrameKey; // for CSS positioning
             const slots     = FRAME_SLOTS[currentFrameKey];
             const frameImg  = await loadImage(currentFrameSrc);
 
@@ -151,41 +152,65 @@
                 const s = slots[i];
                 if (userPhotos[i]) {
                     const photo = await loadImage(userPhotos[i]);
-                    const slotAspect = s.w / s.h;
-                    const imgAspect = photo.naturalWidth / photo.naturalHeight;
+                    if (currentFrameKey == "fourbyone") {
+                        const slotAspect = s.w / s.h;
+                        const imgAspect = photo.naturalWidth / photo.naturalHeight;
 
-                    let sx, sy, sWidth, sHeight;
-                    if (imgAspect > slotAspect) {
-                        // Image is wider than slot: crop sides
-                        sHeight = photo.naturalHeight;
-                        sWidth = sHeight * slotAspect;
-                        sx = (photo.naturalWidth - sWidth) / 2;
-                        sy = 0;
-                    } 
-                    else {
-                        // Image is taller than slot: crop top/bottom
-                        sWidth = photo.naturalWidth;
-                        sHeight = sWidth / slotAspect;
-                        sx = 0;
-                        if (sHeight > photo.naturalHeight) {
+                        let sx, sy, sWidth, sHeight;
+                        if (imgAspect > slotAspect) {
+                            // Image is wider than slot: crop sides
                             sHeight = photo.naturalHeight;
+                            sWidth = sHeight * slotAspect;
+                            sx = (photo.naturalWidth - sWidth) / 2;
                             sy = 0;
                         } 
                         else {
-                            sy = (photo.naturalHeight - sHeight) / 2;
+                            // Image is taller than slot: crop top/bottom
+                            sWidth = photo.naturalWidth;
+                            sHeight = sWidth / slotAspect;
+                            sx = 0;
+                            if (sHeight > photo.naturalHeight) {
+                                sHeight = photo.naturalHeight;
+                                sy = 0;
+                            } 
+                            else {
+                                sy = (photo.naturalHeight - sHeight) / 2;
+                            }
                         }
+
+                        // scale cropped region to cover the slot without distortion
+                        const scale = Math.max(s.w / sWidth, s.h / sHeight);
+                        const drawW = sWidth * scale;
+                        const drawH = sHeight * scale;
+
+                        // center inside the slot
+                        const dx = s.x + (s.w - drawW) / 2;
+                        const dy = s.y + (s.h - drawH) / 2;
+
+                        ctx.drawImage(photo, sx, sy, sWidth, sHeight, dx, dy, drawW, drawH);
                     }
 
-                    // scale cropped region to cover the slot without distortion
-                    const scale = Math.max(s.w / sWidth, s.h / sHeight);
-                    const drawW = sWidth * scale;
-                    const drawH = sHeight * scale;
+                    else if (currentFrameKey == "twobytwo") {
+                        const slotAspect = s.w / s.h;
+                        const imgAspect = photo.naturalWidth / photo.naturalHeight;
 
-                    // center inside the slot
-                    const dx = s.x + (s.w - drawW) / 2;
-                    const dy = s.y + (s.h - drawH) / 2;
-
-                    ctx.drawImage(photo, sx, sy, sWidth, sHeight, dx, dy, drawW, drawH);
+                        let sx, sy, sWidth, sHeight;
+                        if (imgAspect > slotAspect) {
+                            // Crop sides
+                            sHeight = photo.naturalHeight;
+                            sWidth = sHeight * slotAspect;
+                            sx = (photo.naturalWidth - sWidth) / 2;
+                            sy = 0;
+                        } else {
+                            // No crop, just fit
+                            sWidth = photo.naturalWidth;
+                            sHeight = photo.naturalHeight;
+                            sx = 0;
+                            sy = 0;
+                        }
+                        ctx.drawImage(photo, sx, sy, sWidth, sHeight, s.x, s.y, s.w, s.h);
+                    }
+                    
                     applyFilter(ctx, currentFilter, s.x, s.y, s.w, s.h);
                 } 
                 else {
