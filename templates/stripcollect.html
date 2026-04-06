@@ -9,22 +9,28 @@
 
 <body>
  <div class="photo-container">
-  <img src="{{ url_for('static', filename='assets/strip-collect.png') }}" class="foreground-photo" alt="Strip collect photo">
   
-  <img id="stripPreview" alt="Your strip" class="strip-preview-{{ session.get('button_name') }}">
-  
+  <img src="{{ url_for('static', filename='assets/strip-collect.png') }}"
+       class="foreground-photo"
+       alt="Strip collect photo">
+
+  <img id="stripPreview"
+       alt="Your strip"
+       class="strip-preview-{{ session.get('button_name') }}">
+
+  <!-- BUTTONS MUST BE INSIDE THIS CONTAINER -->
   <button class="photo-button download" onclick="downloadStrip()">Download</button>
   <a class="photo-button restart" href="{{ url_for('index') }}">Restart</a>
-</div>
-  
 
-  <script>
-    // Load and show the strip preview
+ </div>
+
+ <script>
     const preview = document.getElementById("stripPreview");
     preview.src = "/static/strips/strip_" + "{{ session.get('button_name', 'fourbyone') }}" + ".png";
 
     function downloadStrip() {
       window.location.href = "/stripselect/download_strip";
     }
-  </script>
+ </script>
 </body>
+
