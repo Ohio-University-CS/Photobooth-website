@@ -4,6 +4,7 @@ import json
 from io import BytesIO
 from PIL import Image
 
+
 # Helper: generate a base64 PNG image (different from JPEG)
 def make_base64_png(width=60, height=60, color=(0, 255, 0)):
     img = Image.new("RGB", (width, height), color=color)
@@ -11,6 +12,7 @@ def make_base64_png(width=60, height=60, color=(0, 255, 0)):
     img.save(buffer, format="PNG")
     encoded = base64.b64encode(buffer.getvalue()).decode("utf-8")
     return f"data:image/png;base64,{encoded}"
+
 
 # 1. TEST: Image format validation (PNG, not JPEG)
 class TestImageFormatValidation:
@@ -33,6 +35,7 @@ class TestImageFormatValidation:
         with pytest.raises(Exception):
             base64.b64decode(bad_data.split(",", 1)[1])
 
+
 # 2. TEST: Photo count boundary and type checks
 class TestPhotoCountBoundaries:
     def test_large_photo_count(self):
@@ -50,11 +53,13 @@ class TestPhotoCountBoundaries:
         with pytest.raises(ValueError):
             int("3.5")
 
+
 # 3. TEST: /stripselect/take_photos with alternate content types
 class TestTakePhotosContentTypes:
     @pytest.fixture
     def client(self):
         from main import app
+
         app.config["TESTING"] = True
         with app.test_client() as client:
             yield client
@@ -65,26 +70,24 @@ class TestTakePhotosContentTypes:
         response = client.post(
             "/stripselect/take_photos",
             data=payload,
-            content_type="application/x-www-form-urlencoded"
+            content_type="application/x-www-form-urlencoded",
         )
         assert response.status_code in (400, 415, 422, 500)
 
     def test_wrong_content_type(self, client):
         # Edge: send as plain text
         response = client.post(
-            "/stripselect/take_photos",
-            data="not json",
-            content_type="text/plain"
+            "/stripselect/take_photos", data="not json", content_type="text/plain"
         )
         assert response.status_code in (400, 415, 422, 500)
 
     def test_missing_content_type(self, client):
         # Error: no content type header
         response = client.post(
-            "/stripselect/take_photos",
-            data=json.dumps({"image": make_base64_png()})
+            "/stripselect/take_photos", data=json.dumps({"image": make_base64_png()})
         )
         assert response.status_code in (400, 415, 422, 500)
+
 
 # 4. TEST: Session photo list manipulation (removal, duplicates)
 class TestPhotoListManipulation:
@@ -104,6 +107,7 @@ class TestPhotoListManipulation:
         photos = ["a.jpg"]
         with pytest.raises(ValueError):
             photos.remove("notfound.jpg")
+
 
 # 5. TEST: Countdown logic with custom step and non-integer
 class TestCountdownCustomLogic:

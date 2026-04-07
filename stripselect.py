@@ -1,16 +1,17 @@
 from flask import Flask, Blueprint, render_template, request, redirect, url_for, session
 import csv, os
-import base64 # for decoding the base64 image data sent from the client
+import base64  # for decoding the base64 image data sent from the client
 
+stripselect_bp = Blueprint("stripselect", __name__, template_folder="../templates")
+os.makedirs("static/photos", exist_ok=True)  # makes sure the photos directory exists
+os.makedirs("data", exist_ok=True)  # makes sure the data directory exists
+LOG_PATH = "data/log.csv"  # path to the log file
 
-stripselect_bp = Blueprint('stripselect', __name__, template_folder='../templates')
-os.makedirs("static/photos", exist_ok=True) # makes sure the photos directory exists
-os.makedirs("data", exist_ok=True) # makes sure the data directory exists
-LOG_PATH = "data/log.csv" # path to the log file
 
 @stripselect_bp.route("/stripselect", methods=["GET"])
 def stripselect():
     return render_template("stripselect.html")
+
 
 @stripselect_bp.route("/", methods=["POST"])
 def store_choice():
@@ -30,28 +31,28 @@ def store_choice():
 
     return redirect(url_for("stripselect.camera"))
 
+
 @stripselect_bp.route("/camera")
 def camera():
     count = session.get("photo_count", 1)
     button = session.get("button_name", "unknown")
     session["photos_taken"] = 0  # reset every time camera page loads
     session["saved_photos"] = []  # clear saved photos on retake
-    return render_template("camerapage.html",
-                           photo_count=count,
-                           last_button=button)
+    return render_template("camerapage.html", photo_count=count, last_button=button)
+
 
 @stripselect_bp.route("/take_photos", methods=["POST"])
-#function to save users photos, called by the camerapage.html script when the user takes a photo
+# function to save users photos, called by the camerapage.html script when the user takes a photo
 def take_photos():
 
-    #gets users photo,
-    #need to send it here as a json object with the key "image"
+    # gets users photo,
+    # need to send it here as a json object with the key "image"
     data = request.json.get("image")
     if not data:
         return "Error, no photo recieved"
 
-    #saves the pohto to the static/photos directory
-    #The filename has the users session id and the photo count to make it unique
+    # saves the pohto to the static/photos directory
+    # The filename has the users session id and the photo count to make it unique
     image_data = base64.b64decode(data.split(",")[1])
 
     photos_taken = session.get("photos_taken", 0) + 1
@@ -67,15 +68,17 @@ def take_photos():
     saved.append(filename)
     session["saved_photos"] = saved
 
-    #tells camerapage.html how many photos have been taken and how many are left, so it can update the UI
-    #and also tells it if the user is done taking photos
+    # tells camerapage.html how many photos have been taken and how many are left, so it can update the UI
+    # and also tells it if the user is done taking photos
     count = session.get("photo_count", 1)
     done = photos_taken >= count
     return {"done": done, "photos_taken": photos_taken, "photo_count": count}
 
+
 @stripselect_bp.route("/next", methods=["POST"])
 def next_page():
     return render_template("camerapage.html")
+
 
 @stripselect_bp.route("/photo-confirmation/<int:photo_id>")
 def photo_confirmation(photo_id):
@@ -94,30 +97,42 @@ def photo_confirmation(photo_id):
     else:
         next_url = url_for("stripselect.stripdesignv")
 
-    return render_template("photo-confirmation.html", photo_id=photo_id,photos=photos,photo=photo,next_url=next_url)
+    return render_template(
+        "photo-confirmation.html",
+        photo_id=photo_id,
+        photos=photos,
+        photo=photo,
+        next_url=next_url,
+    )
 
 
 @stripselect_bp.route("/stripdesign/v")
 def stripdesignv():
     return render_template("stripdesign(v).html")
 
+
 @stripselect_bp.route("/stripdesign/h")
 def stripdesignh():
     return render_template("stripdesign(h).html")
+
 
 @stripselect_bp.route("/stickerpage/v")
 def stickerpagev():
     return render_template("stickerpage(v).html")
 
+
 @stripselect_bp.route("/stickerpage/h")
 def stickerpageh():
     return render_template("stickerpage(h).html")
+
 
 @stripselect_bp.route("/stripcollect")
 def stripcollect():
     return render_template("stripcollect.html")
 
+
 from flask import jsonify
+
 
 @stripselect_bp.route("/get_photos")
 def get_photos():
@@ -126,7 +141,8 @@ def get_photos():
     web_paths = ["/" + p for p in photos]
     return jsonify({"photos": web_paths, "button": button})
 
-#for downloading the frame
+
+# for downloading the frame
 @stripselect_bp.route("/save_strip", methods=["POST"])
 def save_strip():
     data = request.json.get("image")
@@ -140,10 +156,14 @@ def save_strip():
     session["strip_path"] = filename
     return jsonify({"ok": True, "redirect": url_for("stripselect.stripcollect")})
 
+
 @stripselect_bp.route("/download_strip")
 def download_strip():
     from flask import send_file
+
     strip_path = session.get("strip_path")
     if not strip_path or not os.path.exists(strip_path):
         return "No strip found", 404
-    return send_file(strip_path, as_attachment=True, download_name="photobooth_strip.png") #this is what it saves as on users computer
+    return send_file(
+        strip_path, as_attachment=True, download_name="photobooth_strip.png"
+    )  # this is what it saves as on users computer

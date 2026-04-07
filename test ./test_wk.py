@@ -1,4 +1,5 @@
 import sys, os
+
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 import pytest
@@ -24,6 +25,7 @@ class TestNextPageRoute:
     @pytest.fixture
     def client(self):
         from main import app
+
         app.config["TESTING"] = True
         with app.test_client() as client:
             yield client
@@ -96,6 +98,7 @@ class TestStripDesignRoutes:
     @pytest.fixture
     def client(self):
         from main import app
+
         app.config["TESTING"] = True
         with app.test_client() as client:
             yield client
@@ -122,6 +125,7 @@ class TestPhotoConfirmationBranching:
     @pytest.fixture
     def client_with_photos(self):
         from main import app
+
         app.config["TESTING"] = True
         with app.test_client() as client:
             with client.session_transaction() as sess:
@@ -162,6 +166,7 @@ class TestTakePhotosSessionState:
     @pytest.fixture
     def client(self):
         from main import app
+
         app.config["TESTING"] = True
         with app.test_client() as client:
             with client.session_transaction() as sess:
@@ -177,7 +182,7 @@ class TestTakePhotosSessionState:
         client.post(
             "/stripselect/take_photos",
             data=json.dumps(payload),
-            content_type="application/json"
+            content_type="application/json",
         )
         with client.session_transaction() as sess:
             assert sess["photos_taken"] == 1
@@ -188,7 +193,7 @@ class TestTakePhotosSessionState:
         response = client.post(
             "/stripselect/take_photos",
             data=json.dumps(payload),
-            content_type="application/json"
+            content_type="application/json",
         )
         data = response.get_json()
         assert data["done"] is False
@@ -201,7 +206,7 @@ class TestTakePhotosSessionState:
         response = client.post(
             "/stripselect/take_photos",
             data=json.dumps(payload),
-            content_type="application/json"
+            content_type="application/json",
         )
         data = response.get_json()
         assert data["done"] is True
@@ -212,7 +217,7 @@ class TestTakePhotosSessionState:
         client.post(
             "/stripselect/take_photos",
             data=json.dumps(payload),
-            content_type="application/json"
+            content_type="application/json",
         )
         with client.session_transaction() as sess:
             assert len(sess["saved_photos"]) == 1
@@ -223,7 +228,7 @@ class TestTakePhotosSessionState:
         response = client.post(
             "/stripselect/take_photos",
             data=json.dumps(payload),
-            content_type="application/json"
+            content_type="application/json",
         )
         data = response.get_json()
         assert "photo_count" in data
