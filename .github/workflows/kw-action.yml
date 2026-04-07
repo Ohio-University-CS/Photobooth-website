@@ -3,7 +3,7 @@ name: Pull Request Validation - Flask
 on:
   pull_request:
     branches:
-      - main
+      - dev
 
 jobs:
   validate-pr:
