@@ -1,4 +1,5 @@
 import sys, os
+
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 import pytest
@@ -21,11 +22,13 @@ def make_base64_image(width=80, height=80, color=(0, 0, 255)):
 # 1. TEST: Session initialization for /stripselect route
 # ---------------------------------------------------------
 
+
 class TestStripSelectRoute:
 
     @pytest.fixture
     def client(self):
         from main import app
+
         app.config["TESTING"] = True
         with app.test_client() as client:
             yield client
@@ -50,11 +53,13 @@ class TestStripSelectRoute:
 # 2. TEST: /stripselect/ (store_choice) POST behavior
 # ---------------------------------------------------------
 
+
 class TestStoreChoiceRoute:
 
     @pytest.fixture
     def client(self):
         from main import app
+
         app.config["TESTING"] = True
         with app.test_client() as client:
             yield client
@@ -79,11 +84,13 @@ class TestStoreChoiceRoute:
 # 3. TEST: /stripselect/camera route session behavior
 # ---------------------------------------------------------
 
+
 class TestCameraRoute:
 
     @pytest.fixture
     def client(self):
         from main import app
+
         app.config["TESTING"] = True
         with app.test_client() as client:
             with client.session_transaction() as sess:
@@ -111,11 +118,13 @@ class TestCameraRoute:
 # 4. TEST: /stripselect/take_photos image decoding logic
 # ---------------------------------------------------------
 
+
 class TestTakePhotosImageHandling:
 
     @pytest.fixture
     def client(self):
         from main import app
+
         app.config["TESTING"] = True
         with app.test_client() as client:
             with client.session_transaction() as sess:
@@ -130,7 +139,7 @@ class TestTakePhotosImageHandling:
         response = client.post(
             "/stripselect/take_photos",
             data=json.dumps(payload),
-            content_type="application/json"
+            content_type="application/json",
         )
         assert response.status_code == 200
 
@@ -139,7 +148,7 @@ class TestTakePhotosImageHandling:
         response = client.post(
             "/stripselect/take_photos",
             data=json.dumps(payload),
-            content_type="application/json"
+            content_type="application/json",
         )
         assert response.status_code in (400, 422, 500)
 
@@ -148,7 +157,7 @@ class TestTakePhotosImageHandling:
         response = client.post(
             "/stripselect/take_photos",
             data=json.dumps(payload),
-            content_type="application/json"
+            content_type="application/json",
         )
         assert response.status_code in (400, 422)
 
@@ -157,17 +166,19 @@ class TestTakePhotosImageHandling:
 # 5. TEST: /photo-confirmation/<id> behavior
 # ---------------------------------------------------------
 
+
 class TestPhotoConfirmationRoute:
 
     @pytest.fixture
     def client(self):
         from main import app
+
         app.config["TESTING"] = True
         with app.test_client() as client:
             with client.session_transaction() as sess:
                 sess["saved_photos"] = [
                     "static/photos/test_1.jpg",
-                    "static/photos/test_2.jpg"
+                    "static/photos/test_2.jpg",
                 ]
             yield client
 
