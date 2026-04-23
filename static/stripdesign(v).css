@@ -101,6 +101,48 @@ body {
     background-color: #f0f0f0;
 }
 
+/* AI PATTERN INPUT */
+.ai-pattern-wrapper {
+    position: absolute;
+    top: 680px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    z-index: 100;
+    background: rgba(255,255,255,0.9);
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.ai-pattern-wrapper input[type="text"] {
+    padding: 8px;
+    width: 200px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.ai-pattern-wrapper input[type="color"] {
+    width: 40px;
+    height: 40px;
+    border: none;
+    cursor: pointer;
+}
+
+.ai-pattern-wrapper button {
+    padding: 8px 15px;
+    border-radius: 5px;
+    border: none;
+    background: #667eea;
+    color: white;
+    cursor: pointer;
+}
+
+.ai-pattern-wrapper button:hover {
+    background: #764ba2;
+}
+
 /* COLORS / IMAGES */
 .circle-btn.white { background-color: #FFFEEF; }
 .circle-btn.black { background-color: #000000; }

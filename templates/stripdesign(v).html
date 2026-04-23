@@ -27,6 +27,14 @@
       <button class="circle-btn red-polka"   onclick="selectFrame('red-polka')"></button>
     </div>
 
+    <!-- AI CUSTOM PATTERN INPUT -->
+    <div class="ai-pattern-wrapper">
+      <input type="text" id="aiPatternInput" placeholder="Describe pattern (e.g., polka dots, stars)">
+      <input type="color" id="aiPatternColor" value="#ffffff">
+      <button onclick="generateAIPattern()">Generate</button>
+      <button onclick="testEndpoint()">Test</button>
+    </div>
+
     <!-- FILTER BUTTONS -->
     <div class="filter-circle-button-wrapper">
       <button class="circle-btn none"    onclick="selectFilter('none')"></button>
@@ -226,6 +234,16 @@
 
             // 2. Draw frame on top — it naturally masks the photos
             ctx.drawImage(frameImg, 0, 0, canvas.width, canvas.height);
+            
+            // 3. Draw AI custom pattern if generated
+            if (window.aiPatternCode) {
+                try {
+                    const drawPattern = new Function('ctx', 'w', 'h', window.aiPatternCode);
+                    drawPattern(ctx, canvas.width, canvas.height);
+                } catch (err) {
+                    console.error("Error executing AI pattern:", err);
+                }
+            }
         }
 
         // ui handlers
@@ -240,6 +258,46 @@
         function selectFilter(filter) {
             currentFilter = filter;
             renderStrip();
+        }
+
+        async function testEndpoint() {
+            try {
+                const res = await fetch("/stripselect/test_pattern");
+                const data = await res.json();
+                alert("Test result: " + JSON.stringify(data));
+            } catch (err) {
+                alert("Test failed: " + err.message);
+            }
+        }
+
+        async function generateAIPattern() {
+            const description = document.getElementById("aiPatternInput").value;
+            const color = document.getElementById("aiPatternColor").value;
+            
+            if (!description) {
+                alert("Please enter a pattern description");
+                return;
+            }
+            
+            try {
+                const res = await fetch("/stripselect/generate_pattern", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ description, color })
+                });
+                const data = await res.json();
+                
+                if (data.code) {
+                    window.aiPatternCode = data.code;
+                    currentFrameSrc = "";
+                    renderStrip();
+                } else if (data.error) {
+                    alert("Error: " + data.error);
+                }
+            } catch (err) {
+                console.error("Generate pattern error:", err);
+                alert("Failed to generate pattern: " + err.message);
+            }
         }
 
         async function saveAndContinue() {
