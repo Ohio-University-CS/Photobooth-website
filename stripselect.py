@@ -1,11 +1,16 @@
 from flask import Flask, Blueprint, render_template, request, redirect, url_for, session
 import csv, os
-import base64  # for decoding the base64 image data sent from the client
+import base64
+import time
+from google import genai
+from dotenv import load_dotenv
+
+load_dotenv()
 
 stripselect_bp = Blueprint("stripselect", __name__, template_folder="../templates")
-os.makedirs("static/photos", exist_ok=True)  # makes sure the photos directory exists
-os.makedirs("data", exist_ok=True)  # makes sure the data directory exists
-LOG_PATH = "data/log.csv"  # path to the log file
+os.makedirs("static/photos", exist_ok=True)
+os.makedirs("data", exist_ok=True)
+LOG_PATH = "data/log.csv"
 
 
 @stripselect_bp.route("/stripselect", methods=["GET"])
@@ -132,6 +137,58 @@ def stripcollect():
 
 
 from flask import jsonify
+
+
+@stripselect_bp.route("/test_pattern")
+def test_pattern():
+    return jsonify({"test": "Endpoint is working!"})
+
+
+@stripselect_bp.route("/generate_pattern", methods=["POST"])
+def generate_pattern():
+
+    print("=== generate_pattern endpoint called ===")
+    print("Request JSON:", request.json)
+    try:
+        data = request.json
+        user_description = data.get("description", "")
+        color = data.get("color", "#ffffff")
+        
+        if not user_description:
+            return jsonify({"error": "No pattern description provided"}), 400
+        
+        prompt = f"""Generate JavaScript Canvas 2D API code to draw a {user_description} 
+        pattern on a photo strip frame. The pattern should use color '{color}'.
+        The canvas context is available as 'ctx', canvas width as 'w', height as 'h'.
+        Write a loop that iterates across the canvas and draws the pattern.
+        Return ONLY the JavaScript code, no explanations, no markdown formatting.
+        Example format:
+        for (let x = 0; x < w; x += 30) {{
+          for (let y = 0; y < h; y += 30) {{
+            ctx.beginPath();
+            ctx.arc(x, y, 5, 0, Math.PI * 2);
+            ctx.fill();
+          }}
+        }}"""
+        client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
+        response = client.models.generate_content(  # indented correctly now
+            model="gemini-2.5-flash-lite",
+            contents=prompt
+        )
+        code = response.text.strip()
+        
+        if code.startswith("```"):
+            lines = code.split("\n")
+            if lines[0].startswith("```"):
+                lines = lines[1:]
+            if lines and lines[-1].startswith("```"):
+                lines = lines[:-1]
+            code = "\n".join(lines)
+        
+        return jsonify({"code": code})
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 @stripselect_bp.route("/get_photos")
