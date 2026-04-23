@@ -260,16 +260,6 @@
             renderStrip();
         }
 
-        async function testEndpoint() {
-            try {
-                const res = await fetch("/stripselect/test_pattern");
-                const data = await res.json();
-                alert("Test result: " + JSON.stringify(data));
-            } catch (err) {
-                alert("Test failed: " + err.message);
-            }
-        }
-
         async function generateAIPattern() {
             const description = document.getElementById("aiPatternInput").value;
             const color = document.getElementById("aiPatternColor").value;
@@ -289,7 +279,7 @@
                 
                 if (data.code) {
                     window.aiPatternCode = data.code;
-                    currentFrameSrc = "";
+                    //currentFrameSrc = "";
                     renderStrip();
                 } else if (data.error) {
                     alert("Error: " + data.error);

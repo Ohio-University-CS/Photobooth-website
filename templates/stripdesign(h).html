@@ -178,18 +178,35 @@
                 }
             }
 
-            ctx.drawImage(frameImg, 0, 0, canvas.width, canvas.height);
-            
-            // 3. Draw AI custom pattern if generated
-            if (window.aiPatternCode) {
-                try {
-                    const drawPattern = new Function('ctx', 'w', 'h', window.aiPatternCode);
-                    drawPattern(ctx, canvas.width, canvas.height);
-                } catch (err) {
-                    console.error("Error executing AI pattern:", err);
-                }
+// Draw frame normally FIRST (no pattern yet)
+        ctx.drawImage(frameImg, 0, 0, canvas.width, canvas.height);
+
+        // Apply AI pattern ONLY to frame using offscreen canvas
+        if (window.aiPatternCode) {
+            try {
+                // 1. Create temp canvas
+                const tempCanvas = document.createElement("canvas");
+                tempCanvas.width = canvas.width;
+                tempCanvas.height = canvas.height;
+                const tctx = tempCanvas.getContext("2d");
+
+                // 2. Draw frame into temp canvas
+                tctx.drawImage(frameImg, 0, 0, canvas.width, canvas.height);
+
+                // 3. Mask pattern to frame only
+                tctx.globalCompositeOperation = "source-atop";
+
+                const drawPattern = new Function('ctx', 'w', 'h', window.aiPatternCode);
+                drawPattern(tctx, canvas.width, canvas.height);
+
+                // 4. Draw result ON TOP of main canvas
+                ctx.drawImage(tempCanvas, 0, 0);
+
+            } catch (err) {
+                console.error("Error executing AI pattern:", err);
             }
         }
+    }
 
         function selectFrame(color) {
             currentFrameColor = color;
@@ -231,7 +248,7 @@
                 
                 if (data.code) {
                     window.aiPatternCode = data.code;
-                    currentFrameSrc = "";
+                    //currentFrameSrc = "";
                     renderStrip();
                 } else if (data.error) {
                     alert("Error: " + data.error);

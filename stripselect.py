@@ -172,7 +172,7 @@ def generate_pattern():
         }}"""
         client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
         response = client.models.generate_content(  # indented correctly now
-            model="gemini-3.1-flash-lite-preview",
+            model="gemini-2.5-flash-lite",
             contents=prompt
         )
         code = response.text.strip()
