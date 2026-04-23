@@ -1,12 +1,11 @@
 from flask import Flask, Blueprint, render_template, request, redirect, url_for, session
 import csv, os
 import base64
+import time
 from google import genai
 from dotenv import load_dotenv
 
 load_dotenv()
-
-client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 
 stripselect_bp = Blueprint("stripselect", __name__, template_folder="../templates")
 os.makedirs("static/photos", exist_ok=True)
@@ -147,6 +146,7 @@ def test_pattern():
 
 @stripselect_bp.route("/generate_pattern", methods=["POST"])
 def generate_pattern():
+
     print("=== generate_pattern endpoint called ===")
     print("Request JSON:", request.json)
     try:
@@ -170,9 +170,9 @@ def generate_pattern():
             ctx.fill();
           }}
         }}"""
-        
+        client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
         response = client.models.generate_content(  # indented correctly now
-            model="gemini-2.0-flash",
+            model="gemini-3.1-flash-lite-preview",
             contents=prompt
         )
         code = response.text.strip()
