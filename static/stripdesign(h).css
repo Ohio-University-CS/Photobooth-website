@@ -32,18 +32,6 @@ body {
   height: 750px;   /* same as container */
 }
 
-/* FRAME COLOR BUTTONS — pixel-perfect inside image */
-.frame-circle-button-wrapper {
-    position: absolute;
-    top: 555px;     /* adjust to match your horizontal layout */
-    left: 350px;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    width: 250px;
-    justify-content: center;
-}
 
 /* FILTER BUTTONS */
 .filter-circle-button-wrapper {
@@ -80,55 +68,56 @@ body {
 /* AI PATTERN INPUT */
 .ai-pattern-wrapper {
     position: absolute;
-    top: 680px;
-    left: 50%;
+    top: 515px;
+    left: 345px;
     transform: translateX(-50%);
-    display: flex;
-    gap: 10px;
     align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
     z-index: 100;
-    background: rgba(255,255,255,0.9);
-    padding: 15px;
     border-radius: 10px;
+    background: #632424;
+    padding: 10px;
+    border-radius: 10px;
+    width: 200px; 
 }
 
+
 .ai-pattern-wrapper input[type="text"] {
-    padding: 8px;
-    width: 200px;
+    padding: 12px;
+    width: 125px;
     border-radius: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid #be9d9d;
+    background: #FEE9E7;
+    font-family: 'Kapakana', sans-serif;
+    color:#632424;
+    font-size: medium;
 }
 
 .ai-pattern-wrapper input[type="color"] {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     border: none;
     cursor: pointer;
+    background: #be9d9d;
 }
 
 .ai-pattern-wrapper button {
-    padding: 8px 15px;
+    padding: 5px 15px;
     border-radius: 5px;
     border: none;
-    background: #667eea;
+    background: #be9d9d;
     color: white;
     cursor: pointer;
+    font-family: 'Kapakana', sans-serif;
+    font-size: large;
 }
 
 .ai-pattern-wrapper button:hover {
-    background: #764ba2;
+    background: #792d2d;
 }
 
-/* COLORS / IMAGES */
-.circle-btn.white { background-color: #FFFEEF; }
-.circle-btn.black { background-color: #000000; }
-.circle-btn.pink { background-color: #FDC8C8; }
-.circle-btn.blue { background-color: #CBE3EB; }
-.circle-btn.green { background-color: #ACC0AC; }
-
-.circle-btn.white-polka { background-image: url("/static/assets/frame-buttons/white-polka.jpeg"); }
-.circle-btn.black-polka { background-image: url("/static/assets/frame-buttons/black-polka.png"); }
-.circle-btn.red-polka { background-image: url("/static/assets/frame-buttons/red-polka.jpeg"); }
 
 .circle-btn.none { background-image: url("/static/assets/filter-buttons/filter-none.png"); }
 .circle-btn.bnw { background-image: url("/static/assets/filter-buttons/filter-bnw.png"); }

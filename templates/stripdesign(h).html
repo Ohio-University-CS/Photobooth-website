@@ -13,7 +13,7 @@
              alt="Strip design photo">
              <canvas id="stripCanvas" class="frame-image"></canvas>
 
-    <div class="frame-circle-button-wrapper">
+    <!-- <div class="frame-circle-button-wrapper">
         <button class="circle-btn white" onclick="selectFrame('white')"> </button>
         <button class="circle-btn black" onclick="selectFrame('black')"> </button>
         <button class="circle-btn pink" onclick="selectFrame('pink')"> </button>
@@ -22,14 +22,13 @@
         <button class="circle-btn white-polka" onclick="selectFrame('white-polka')"> </button>
         <button class="circle-btn black-polka" onclick="selectFrame('black-polka')"> </button>
         <button class="circle-btn red-polka" onclick="selectFrame('red-polka')"> </button>
-    </div>
+    </div> -->
 
     <!-- AI CUSTOM PATTERN INPUT -->
     <div class="ai-pattern-wrapper">
       <input type="text" id="aiPatternInput" placeholder="Describe pattern (e.g., polka dots, stars)">
-      <input type="color" id="aiPatternColor" value="#ffffff">
+      <input type="color" id="aiPatternColor" value="#ffffff" >
       <button onclick="generateAIPattern()">Generate</button>
-      <button onclick="testEndpoint()">Test</button>
     </div>
 
         <!-- FILTER BUTTONS -->
