@@ -18,7 +18,10 @@
     <!-- AI CUSTOM PATTERN INPUT -->
     <div class="ai-pattern-wrapper">
       <input type="text" id="aiPatternInput" placeholder="Describe pattern (e.g., polka dots, stars)">
+      <label for="aiPatternColor">Pattern:</label>
       <input type="color" id="aiPatternColor" value="#ffffff">
+      <label for="aiBackgroundColor">Background:</label>
+      <input type="color" id="aiBackgroundColor" value="#ffffff">
       <button onclick="generateAIPattern()">Generate</button>
     </div>
 
@@ -250,6 +253,7 @@
         async function generateAIPattern() {
             const description = document.getElementById("aiPatternInput").value;
             const color = document.getElementById("aiPatternColor").value;
+            const backgroundColor = document.getElementById("aiBackgroundColor").value;
             
             if (!description) {
                 alert("Please enter a pattern description");
@@ -260,7 +264,7 @@
                 const res = await fetch("/stripselect/generate_pattern", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ description, color })
+                    body: JSON.stringify({ description, color, backgroundColor })
                 });
                 const data = await res.json();
                 

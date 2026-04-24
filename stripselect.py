@@ -153,16 +153,20 @@ def generate_pattern():
         data = request.json
         user_description = data.get("description", "")
         color = data.get("color", "#ffffff")
+        background_color = data.get("backgroundColor", "#ffffff")
         
         if not user_description:
             return jsonify({"error": "No pattern description provided"}), 400
         
-        prompt = f"""Generate JavaScript Canvas 2D API code to draw a {user_description} 
+        prompt = f"""Generate JavaScript Canvas 2D API code to draw a background, the background
+        should be {background_color} then a {user_description} 
         pattern on a photo strip frame. The pattern should use color '{color}'.
         The canvas context is available as 'ctx', canvas width as 'w', height as 'h'.
         Write a loop that iterates across the canvas and draws the pattern.
         Return ONLY the JavaScript code, no explanations, no markdown formatting.
         Example format:
+        ctx.fillStyle = '{background_color}';
+        ctx.fillRect(0, 0, w, h);
         for (let x = 0; x < w; x += 30) {{
           for (let y = 0; y < h; y += 30) {{
             ctx.beginPath();

@@ -103,6 +103,12 @@ body {
     background: #be9d9d;
 }
 
+.ai-pattern-wrapper label {
+    font-family: 'Kapakana', sans-serif;
+    color: #FEE9E7;
+    font-size: medium;
+}
+
 .ai-pattern-wrapper button {
     padding: 5px 15px;
     border-radius: 5px;
