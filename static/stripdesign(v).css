@@ -57,18 +57,6 @@ body {
   height: auto;
 }
 
-/* FRAME COLOR BUTTONS */
-.frame-circle-button-wrapper {
-  position: absolute;
-  top: 325px;
-  left: 605px;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  width: 250px;
-  justify-content: center;
-}
 
 /* FILTER BUTTONS */
 .filter-circle-button-wrapper {
@@ -101,16 +89,60 @@ body {
     background-color: #f0f0f0;
 }
 
-/* COLORS / IMAGES */
-.circle-btn.white { background-color: #FFFEEF; }
-.circle-btn.black { background-color: #000000; }
-.circle-btn.pink { background-color: #FDC8C8; }
-.circle-btn.blue { background-color: #CBE3EB; }
-.circle-btn.green { background-color: #ACC0AC; }
+/* AI PATTERN INPUT */
+.ai-pattern-wrapper {
+    position: absolute;
+    top: 290px;
+    left: 606px;
+    transform: translateX(-50%);
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    z-index: 100;
+    border-radius: 10px;
+    background: #632424;
+    padding: 10px;
+    border-radius: 10px;
+    width: 200px; 
+}
 
-.circle-btn.white-polka { background-image: url("/static/assets/frame-buttons/white-polka.jpeg"); }
-.circle-btn.black-polka { background-image: url("/static/assets/frame-buttons/black-polka.png"); }
-.circle-btn.red-polka { background-image: url("/static/assets/frame-buttons/red-polka.jpeg"); }
+
+.ai-pattern-wrapper input[type="text"] {
+    padding: 12px;
+    width: 125px;
+    border-radius: 5px;
+    border: 1px solid #be9d9d;
+    background: #FEE9E7;
+    font-family: 'Kapakana', sans-serif;
+    color:#632424;
+    font-size: medium;
+}
+
+.ai-pattern-wrapper input[type="color"] {
+    width: 30px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    background: #be9d9d;
+}
+
+.ai-pattern-wrapper button {
+    padding: 5px 15px;
+    border-radius: 5px;
+    border: none;
+    background: #be9d9d;
+    color: white;
+    cursor: pointer;
+    font-family: 'Kapakana', sans-serif;
+    font-size: large;
+}
+
+.ai-pattern-wrapper button:hover {
+    background: #792d2d;
+}
+
+
 
 .circle-btn.none { background-image: url("/static/assets/filter-buttons/filter-none.png"); }
 .circle-btn.bnw { background-image: url("/static/assets/filter-buttons/filter-bnw.png"); }
