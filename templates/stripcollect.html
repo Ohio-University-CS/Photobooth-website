@@ -20,6 +20,7 @@
 
   <!-- BUTTONS MUST BE INSIDE THIS CONTAINER -->
   <button class="photo-button download" onclick="downloadStrip()">Download</button>
+  <button class="photo-button download4x6" onclick="download4x6Strip()">Print</button>
   <a class="photo-button restart" href="{{ url_for('index') }}">Restart</a>
 
  </div>
@@ -31,6 +32,54 @@
     function downloadStrip() {
       window.location.href = "/stripselect/download_strip";
     }
+
+    const STRIP_CONFIGS = {
+      'fourbyone':  { landscape: false, offsetX: -260,   offsetY: -50, scale: 1.1 },
+      'onebythree': { landscape: true,  offsetX: -310,   offsetY: -120, scale: 1.37 },
+      'onebyfour':  { landscape: true,  offsetX: -210,   offsetY: -60,   scale: 1.23 },
+      'fourbytwo':  { landscape: false, offsetX: -145,   offsetY: -160,   scale: 1.25 }, 
+      'twobytwo':   { landscape: false, offsetX: 5,   offsetY: 0,   scale: 1.0 },
+    };
+
+    function download4x6Strip() {
+      const stripType = "{{ session.get('button_name', 'fourbyone') }}";
+      const config = STRIP_CONFIGS[stripType] || { landscape: false, offsetX: 0, offsetY: 0, scale: 1.0 };
+
+      const DPI = 300;
+      const canvasWidth  = config.landscape ? 6 * DPI : 4 * DPI;
+      const canvasHeight = config.landscape ? 4 * DPI : 6 * DPI;
+
+      const canvas = document.createElement("canvas");
+      canvas.width = canvasWidth;
+      canvas.height = canvasHeight;
+      const ctx = canvas.getContext("2d");
+
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+      const img = document.getElementById("stripPreview");
+      const aspect = img.naturalWidth / img.naturalHeight;
+
+      let drawW = canvasWidth * config.scale;
+      let drawH = drawW / aspect;
+
+      if (drawH > canvasHeight * config.scale) {
+        drawH = canvasHeight * config.scale;
+        drawW = drawH * aspect;
+      }
+
+      ctx.drawImage(img, config.offsetX, config.offsetY, drawW, drawH);
+
+      const link = document.createElement("a");
+      link.download = `photostrip_4x6_${stripType}.png`;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+
+      setTimeout(() => {
+        window.open("https://www.cvs.com/photo/prints", "_blank");
+      }, 1500);
+    }
+
  </script>
 </body>
 
