@@ -29,6 +29,7 @@ A website that allows users to take photobooth images, choose a frame and filter
 1. Clone the repository
    - git clone https://github.com/Ohio-University-CS/Photobooth-website.git
    - cd Photobooth-website
+   - *most of our current program is in the dev branch
 
 2. Install the dependencies   
    - python3 -m venv venv
@@ -77,12 +78,12 @@ Photobooth-website/
 
 ## Contributors:
 
-| Name | GitHub |
-|------|--------|
-| Annie Nguyen | [@habitzs](https://github.com/habitzs) |
-| Katrin Williams | [@kcwilliams22](https://github.com/kcwilliams22) |
-| Sarah Ivey | [@iveysarah](https://github.com/iveysarah) |
-| Will Kashner | [@Will-56](https://github.com/Will-56) |
+| Name | GitHub | Role |
+|------|--------|------|
+| Annie Nguyen | [@habitzs](https://github.com/habitzs) | Back End |
+| Katrin Williams | [@kcwilliams22](https://github.com/kcwilliams22) | Front End |
+| Sarah Ivey | [@iveysarah](https://github.com/iveysarah) | Back End / Front End |
+| Will Kashner | [@Will-56](https://github.com/Will-56) | Back End |
 
 
 
